@@ -1,4 +1,4 @@
-# Bothell robots from Nikhil
+# Bothell robots from Nikhil DOM
 
 ## NOTICE is here again 
 
