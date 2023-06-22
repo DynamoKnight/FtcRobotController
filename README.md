@@ -1,6 +1,6 @@
 # Bothell robots
 
-## NOTICE
+## NOTICE is here
 
 This repository contains the public FTC SDK for the POWERPLAY (2022-2023) competition season.
 
