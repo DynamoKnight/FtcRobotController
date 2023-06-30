@@ -1,8 +1,9 @@
 GUS: Please include your name at the begining of your change.
 GUS: Then it is easy to tell who has made what changes without checking GitHub or using tools.
 ------------------------------------------
-
 So much fun!
+
+andrew conflictmk2
 According !!! to all known laws of physics
 what goes up must come down
 ... but what is "up" or "down"?
@@ -10,4 +11,8 @@ Nakul: MORE CONFLICTS!!!! <-- GUS: Did you get any conflicts, Nakul?
 Somebody once told me...
 Looks like all the changes are MINE!!!! ....love always, Gus
 Gus is here to add some conflcits!!!
+<<<<<<< HEAD
 Norma: I love conflicts! Yippee!!!
+=======
+crystal
+>>>>>>> f2dd45dd6eb42744771f0cf4311fceda83a715f8
