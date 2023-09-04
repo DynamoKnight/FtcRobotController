@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 public class Config {
-
+    //////////////////////
+    //VARIABLES
+    //////////////////////
     // Drivetrain
     public static volatile String DRIVE_FRONT_LEFT = "drive_front_left";
     public static volatile String DRIVE_FRONT_RIGHT = "drive_front_right";
@@ -21,4 +23,5 @@ public class Config {
     public static volatile String SERVO_CLAW = "servo_claw";
     public static volatile double CLAW_CLOSE_ANGLE = -20;
     public static volatile double CLAW_OPEN_ANGLE = 50;
+
 }
