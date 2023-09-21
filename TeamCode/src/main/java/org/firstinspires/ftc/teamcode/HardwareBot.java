@@ -47,6 +47,7 @@ public class HardwareBot {
     public DcMotor backLeft;
     public DcMotor backRight;
     public Servo servoClaw;
+    public DcMotor elevator;
 
     public ElapsedTime period = new ElapsedTime();
 
@@ -58,7 +59,7 @@ public class HardwareBot {
     //////////////////////
     //METHODS
     //////////////////////
-    public void init(HardwareMap hardwareMap)    {
+    public void init(HardwareMap hardwareMap) throws InterruptedException {
 
         // Define and Initialize Motors
         // Names need to exactly match with those in the control hub
@@ -68,6 +69,7 @@ public class HardwareBot {
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         servoClaw = hardwareMap.get(Servo.class, Config.SERVO_CLAW);
+        elevator = hardwareMap.get(DcMotor.class, Config.MOTOR_ELEVATOR);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -79,7 +81,7 @@ public class HardwareBot {
         backRight.setPower(0);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        /*frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -92,8 +94,12 @@ public class HardwareBot {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setTargetPosition(0);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {
