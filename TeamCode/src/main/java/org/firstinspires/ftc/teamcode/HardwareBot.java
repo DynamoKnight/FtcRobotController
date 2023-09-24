@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -48,6 +49,7 @@ public class HardwareBot {
     public DcMotor backRight;
     public Servo servoClaw;
     public DcMotor elevator;
+    public double encoder_resolution;
 
     public ElapsedTime period = new ElapsedTime();
 
@@ -80,6 +82,11 @@ public class HardwareBot {
         frontRight.setPower(0);
         backRight.setPower(0);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         /*frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -100,6 +107,8 @@ public class HardwareBot {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setTargetPosition(0);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        encoder_resolution = Config.ENCODER_RESOLUTION;
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {
@@ -113,6 +122,12 @@ public class HardwareBot {
 
         // Reset the cycle clock for the next pass.
         period.reset();
+    }
+
+    // Converts the number of revolutions to ticks
+    public double spin(double revolutions){
+        int ticks = (int)(encoder_resolution * revolutions);
+        return ticks;
     }
 
 }

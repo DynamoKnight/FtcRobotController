@@ -20,7 +20,7 @@ public class NakulOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double speed = 1;
-        int slide = 0;
+        int ticks = 0;
 
         robot.init(hardwareMap);
 
@@ -99,30 +99,32 @@ public class NakulOpMode extends LinearOpMode {
             }
 
             if (gamepad1.dpad_up){
-                slide += 10;
-                robot.elevator.setTargetPosition(slide);
+                ticks += 50;
+                robot.elevator.setTargetPosition(ticks);
                 robot.elevator.setPower(0.8);
             }
             if (gamepad1.dpad_down){
-                slide -= 10;
-                robot.elevator.setTargetPosition(slide);
+                ticks -= 50;
+                robot.elevator.setTargetPosition(ticks);
                 robot.elevator.setPower(0.4);
             }
 
             // Open Claw
             if(gamepad1.a){
-
+                robot.servoClaw.setPosition(0);
             }
             // Close Claw
             if (gamepad1.x){
-
+                robot.servoClaw.setPosition(1);
             }
 
-            telemetry.addData("Status", "Running: Nakul is" + speed + "% cool!");
+            telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");
             telemetry.update();
 
             robot.waitForTick(40);
         }
     }
+
+
 
 }
