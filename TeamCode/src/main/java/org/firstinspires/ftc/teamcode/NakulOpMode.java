@@ -108,6 +108,17 @@ public class NakulOpMode extends LinearOpMode {
                 robot.elevator.setTargetPosition(ticks);
                 robot.elevator.setPower(0.4);
             }
+            // Rotate 90 degress left
+            if (gamepad1.dpad_left){
+                robot.frontRight.setPower(0.8);
+                robot.backRight.setPower(0.8);
+                robot.frontLeft.setPower(-0.8);
+                robot.backLeft.setPower(-0.8);
+            }
+            // Rotate 90 degress right
+            if (gamepad1.dpad_right) {
+
+            }
 
             // Open Claw
             if(gamepad1.a){

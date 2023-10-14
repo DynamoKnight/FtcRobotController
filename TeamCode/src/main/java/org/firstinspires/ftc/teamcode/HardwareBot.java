@@ -125,9 +125,10 @@ public class HardwareBot {
     }
 
     // Converts the number of revolutions to ticks
-    public double spin(double revolutions){
+    public int spin(double revolutions){
         int ticks = (int)(encoder_resolution * revolutions);
         return ticks;
     }
+
 
 }
