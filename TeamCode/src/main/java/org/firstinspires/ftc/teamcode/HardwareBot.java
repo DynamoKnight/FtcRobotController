@@ -50,6 +50,7 @@ public class HardwareBot {
     public Servo servoClaw;
     public DcMotor elevator;
     public double encoder_resolution;
+    public double mc_diameter;
 
     public ElapsedTime period = new ElapsedTime();
 
@@ -109,6 +110,7 @@ public class HardwareBot {
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         encoder_resolution = Config.ENCODER_RESOLUTION;
+        mc_diameter = Config.MECANUM_WHEEL_DIAMETER;
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {
@@ -125,7 +127,11 @@ public class HardwareBot {
     }
 
     // Converts the number of revolutions to ticks
-    public int spin(double revolutions){
+    public int move(double centimeters){
+        // Circumference = Diameter * pi
+        // Revolutions = Distance / Circumference
+        // Number of Ticks = Encoder * Revolutions
+        double revolutions = centimeters / (mc_diameter * Math.PI);
         int ticks = (int)(encoder_resolution * revolutions);
         return ticks;
     }
