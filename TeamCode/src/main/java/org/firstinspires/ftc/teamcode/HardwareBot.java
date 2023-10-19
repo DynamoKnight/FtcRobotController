@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -36,19 +38,22 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 public class HardwareBot {
     //////////////////////
     //VARIABLES
     //////////////////////
 
     // Define Motor and Servo objects
-    public IMU imu;
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
     public Servo servoClaw;
     public DcMotor elevator;
+    public BNO055IMU imu;
+    public Orientation angles;
     public double encoder_resolution;
     public double mc_diameter;
 
@@ -66,7 +71,6 @@ public class HardwareBot {
 
         // Define and Initialize Motors
         // Names need to exactly match with those in the control hub
-        imu = hardwareMap.get(IMU.class, "imu");
         frontLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_FRONT_LEFT);
         frontRight = hardwareMap.get(DcMotor.class, Config.DRIVE_FRONT_RIGHT);
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
@@ -87,6 +91,21 @@ public class HardwareBot {
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO55IMUCalibration.json";
+        // Allows the values to be tracked
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
+        // Indicates the algorithm used to track the velocity and position
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+        //RevHubOrientationOnRobot.LogoFacingDirection.FORWARD
+        //RevHubOrientationOnRobot.UsbFacingDirection.UP
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         /*frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -134,6 +153,19 @@ public class HardwareBot {
         double revolutions = centimeters / (mc_diameter * Math.PI);
         int ticks = (int)(encoder_resolution * revolutions);
         return ticks;
+    }
+
+    // Sets the same power to all motors
+    public void setMotorPower(double power){
+        setMotorPower(power, power, power, power);
+    }
+
+    // Individually sets the power of the motors
+    public void setMotorPower(double fl, double fr, double bl, double br){
+        frontLeft.setPower(fl);
+        frontRight.setPower(fr);
+        backLeft.setPower(bl);
+        backRight.setPower(br);
     }
 
 
