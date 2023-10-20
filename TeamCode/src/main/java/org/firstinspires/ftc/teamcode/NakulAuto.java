@@ -112,7 +112,7 @@ public class NakulAuto extends LinearOpMode {
 
         currentAngle = deltaAngle;
         previousAngles = orientation;
-        telemetry.addData("Heading", robot.angles.firstAngle);
+        telemetry.addData("Heading", orientation.firstAngle);
         //telemetry.addData("Roll", angles.secondAngle);
         //telemetry.addData("Pitch", angles.thirdAngle);
         return currentAngle;

@@ -100,13 +100,13 @@ public class NakulOpMode extends LinearOpMode {
 
             if (gamepad1.dpad_up){
                 ticks += 50;
-                robot.elevator.setTargetPosition(ticks);
-                robot.elevator.setPower(0.8);
+                //robot.elevator.setTargetPosition(ticks);
+                //robot.elevator.setPower(0.8);
             }
             if (gamepad1.dpad_down){
                 ticks -= 50;
-                robot.elevator.setTargetPosition(ticks);
-                robot.elevator.setPower(0.4);
+                //robot.elevator.setTargetPosition(ticks);
+                //robot.elevator.setPower(0.4);
             }
             // Rotate 90 degress left
             if (gamepad1.dpad_left){
@@ -122,11 +122,11 @@ public class NakulOpMode extends LinearOpMode {
 
             // Open Claw
             if(gamepad1.a){
-                robot.servoClaw.setPosition(0);
+                //robot.servoClaw.setPosition(0);
             }
             // Close Claw
             if (gamepad1.x){
-                robot.servoClaw.setPosition(1);
+                //robot.servoClaw.setPosition(1);
             }
 
             telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");
