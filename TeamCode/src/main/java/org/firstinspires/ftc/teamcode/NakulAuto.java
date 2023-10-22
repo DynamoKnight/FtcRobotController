@@ -17,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import java.lang.annotation.Target;
+
 @Autonomous(name = "NakulAuto", group = "")
 //@TeleOp
 
@@ -50,17 +52,11 @@ public class NakulAuto extends LinearOpMode {
         // Run and then Stop after finishing
         // move forward for two seconds
         if (opModeIsActive()) {
-            robot.frontLeft.setPower(0.5);
-            robot.frontRight.setPower(0.5);
-            sleep(2000);     // wait for two seconds
-            robot.frontLeft.setPower(0);
-            robot.frontRight.setPower(0);
-            turn(90);
-            sleep(3000);
-            turnTo(-90);
+            gyroTest();
         }
     }
 
+    // Tests the robot moving forward
     public void moveForward(){
 
         robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,11 +80,25 @@ public class NakulAuto extends LinearOpMode {
         sleep(1000);
     }
 
+    // Tests the IMU and PID Control System
     public void gyroTest(){
         robot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        robot.frontLeft.setPower(0.5);
+        robot.frontRight.setPower(0.5);
+        sleep(2000);     // wait for two seconds
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+
+        turn(90);
+        sleep(3000);
+        turnTo(-90);
+        sleep(3000);
+
+        turnPID(180);
     }
 
     // Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
@@ -155,5 +165,28 @@ public class NakulAuto extends LinearOpMode {
         turn(error);
     }
 
+    // Returns the angle of the robot relative to the origin
+    public double getAbsoluteAngle(){
+        return robot.imu.getAngularOrientation(
+                AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES
+        ).firstAngle;
+    }
+
+    // Turns to the absolute angle using PID coefficients
+    void turnToPID(double targetAngle){
+        TurnPIDController pid = new TurnPIDController(targetAngle, 0.01, 0, 0.003);
+        // Keeps turning until the robot is within ±1 degree of the target
+        while(opModeIsActive() && Math.abs(targetAngle - getAbsoluteAngle()) > 1){
+            double motorPower = pid.update(getAbsoluteAngle());
+            robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
+        }
+        // Stops the robot when done
+        robot.setMotorPower(0);
+    }
+
+    // Turns to the relative angle
+    void turnPID(double degrees){
+        turnToPID(degrees + getAbsoluteAngle());
+    }
 }
 
