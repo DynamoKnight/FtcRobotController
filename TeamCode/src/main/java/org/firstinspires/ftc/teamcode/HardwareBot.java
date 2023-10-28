@@ -150,8 +150,8 @@ public class HardwareBot {
         period.reset();
     }
 
-    // Converts the number of revolutions to ticks
-    public int move(double centimeters){
+    // Converts the target distance to ticks
+    public int distanceToTicks(double centimeters){
         // Circumference = Diameter * pi
         // Revolutions = Distance / Circumference
         // Number of Ticks = Encoder * Revolutions
@@ -172,6 +172,7 @@ public class HardwareBot {
         backLeft.setPower(bl);
         backRight.setPower(br);
     }
+
 
 
 }

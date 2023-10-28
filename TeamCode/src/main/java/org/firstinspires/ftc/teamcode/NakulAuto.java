@@ -32,7 +32,7 @@ public class NakulAuto extends LinearOpMode {
     private Orientation previousAngles = new Orientation();
     private double currentAngle = 0.0;
     //////////////////////
-    //METHODS
+    //MAIN METHOD
     //////////////////////
     // This method must be implemented. It is overridden to do the stuff we want.
     @Override
@@ -52,40 +52,27 @@ public class NakulAuto extends LinearOpMode {
         // Run and then Stop after finishing
         // move forward for two seconds
         if (opModeIsActive()) {
+            //moveForward();
             gyroTest();
         }
     }
+    //////////////////////
+    //TESTING METHODS
+    //////////////////////
 
     // Tests the robot moving forward
     public void moveForward(){
 
-        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        robot.frontRight.setTargetPosition(robot.move(20));
-        robot.frontLeft.setTargetPosition(robot.move(20));
-
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        // Sets the target for the robot to travel
+        goToTarget(20, 0.5);
+        // Sleepy time...
         sleep(1000);
     }
 
     // Tests the IMU and PID Control System
     public void gyroTest(){
 
-        robot.setMotorPower(0.5);
-        sleep(2000);     // wait for two seconds
-        robot.setMotorPower(0);
+        goToTarget(100, 0.5);
 
         turn(90);
         sleep(3000);
@@ -97,6 +84,48 @@ public class NakulAuto extends LinearOpMode {
         turnPID(90);
     }
 
+    //////////////////////
+    //METHODS
+    //////////////////////
+
+    // Moves the robot to the desired target destination
+    public void goToTarget(double centimeters, double power){
+        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // The target position in units of ticks
+        double targetTicks = robot.frontLeft.getCurrentPosition() + robot.distanceToTicks(centimeters);
+
+        robot.frontRight.setTargetPosition(robot.distanceToTicks(centimeters));
+        robot.frontLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+        robot.backRight.setTargetPosition(robot.distanceToTicks(centimeters));
+        robot.backLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+
+        robot.setMotorPower(power);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(opModeIsActive() && robot.frontLeft.isBusy()){
+            telemetry.addData("Front_Left Position: ", robot.frontLeft.getCurrentPosition());
+            telemetry.update();
+            // Checks to see if the target destination is reached
+            if (robot.frontLeft.getCurrentPosition() == targetTicks){
+                robot.setMotorPower(0);
+            }
+        }
+        // Just in case
+        robot.setMotorPower(0);
+    }
     // Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
     public void resetAngle(){
         previousAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);

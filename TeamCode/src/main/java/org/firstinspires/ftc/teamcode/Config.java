@@ -5,7 +5,7 @@ public class Config {
     //VARIABLES
     //////////////////////
     /*
-    Robot WIFI: 22556-RC OR 22556-RC2
+    Robot WIFI: 22556-RC OR 22556-B-RC
     WIFI Password: BHS22556
     IP Address: http://192.168.43.1:8080/
      */
