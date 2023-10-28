@@ -82,23 +82,19 @@ public class NakulAuto extends LinearOpMode {
 
     // Tests the IMU and PID Control System
     public void gyroTest(){
-        robot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        robot.frontLeft.setPower(0.5);
-        robot.frontRight.setPower(0.5);
+        robot.setMotorPower(0.5);
         sleep(2000);     // wait for two seconds
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
+        robot.setMotorPower(0);
 
         turn(90);
         sleep(3000);
         turnTo(-90);
-        sleep(3000);
+        sleep(5000);
 
-        turnPID(180);
+        turnToPID(90);
+        sleep(3000);
+        turnPID(90);
     }
 
     // Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
@@ -120,7 +116,7 @@ public class NakulAuto extends LinearOpMode {
             deltaAngle += 360;
         }
 
-        currentAngle = deltaAngle;
+        currentAngle += deltaAngle;
         previousAngles = orientation;
         telemetry.addData("Heading", orientation.firstAngle);
         //telemetry.addData("Roll", angles.secondAngle);
@@ -144,7 +140,7 @@ public class NakulAuto extends LinearOpMode {
             telemetry.update();
         }
 
-        robot.setMotorPower(0.0);
+        robot.setMotorPower(0);
     }
 
     // Turns the Robot to a target angle
@@ -158,7 +154,7 @@ public class NakulAuto extends LinearOpMode {
         if (error > 180){
             error -= 360;
         }
-        else if (error <= -180){
+        else if (error < -180){
             error += 360;
         }
         // Turns to the absolute angle
@@ -175,10 +171,18 @@ public class NakulAuto extends LinearOpMode {
     // Turns to the absolute angle using PID coefficients
     void turnToPID(double targetAngle){
         TurnPIDController pid = new TurnPIDController(targetAngle, 0.01, 0, 0.003);
+        // 50 milliseconds for each update
+        telemetry.setMsTransmissionInterval(50);
         // Keeps turning until the robot is within ±1 degree of the target
-        while(opModeIsActive() && Math.abs(targetAngle - getAbsoluteAngle()) > 1){
+        while (opModeIsActive() && Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
             double motorPower = pid.update(getAbsoluteAngle());
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
+
+            telemetry.addData("Current Angle", getAbsoluteAngle());
+            telemetry.addData("Target Angle", targetAngle);
+            telemetry.addData("Slope", pid.getLastSlope());
+            telemetry.addData("Power", motorPower);
+            telemetry.update();
         }
         // Stops the robot when done
         robot.setMotorPower(0);
