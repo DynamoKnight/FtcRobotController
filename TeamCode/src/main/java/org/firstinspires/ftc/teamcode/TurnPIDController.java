@@ -69,9 +69,7 @@ public class TurnPIDController {
         // Motor power calculation (CRAZY MATH STUFF)
         // The first part makes sure it goes in the direction of the error
         // motorPower is within ±1
-        double motorPower = (0.1 * Math.signum(error)) + (0.9 * Math.tanh(
-                kP * error + kI * accumulatedError + kD * slope
-        ));
+        double motorPower = 0.1 * Math.signum(error) + 0.9 * Math.tanh(kP * error + kI * accumulatedError - kD * slope);
         return motorPower;
 
     }

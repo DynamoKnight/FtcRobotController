@@ -31,6 +31,7 @@ public class NakulAuto extends LinearOpMode {
 
     private Orientation previousAngles = new Orientation();
     private double currentAngle = 0.0;
+
     //////////////////////
     //MAIN METHOD
     //////////////////////
@@ -73,14 +74,14 @@ public class NakulAuto extends LinearOpMode {
     public void gyroTest(){
 
         goToTarget(100, 0.5);
+        sleep(3000);
 
-        turn(90);
+        /*turn(90);
         sleep(3000);
         turnTo(-90);
-        sleep(5000);
+        sleep(5000);*/
 
-        turnToPID(90);
-        sleep(3000);
+
         turnPID(90);
     }
 
@@ -90,15 +91,17 @@ public class NakulAuto extends LinearOpMode {
 
     // Moves the robot to the desired target destination
     public void goToTarget(double centimeters, double power){
+
+        // Allows ticks and position to be tracked
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // The target position in units of ticks
         double targetTicks = robot.frontLeft.getCurrentPosition() + robot.distanceToTicks(centimeters);
@@ -115,17 +118,21 @@ public class NakulAuto extends LinearOpMode {
         robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while(opModeIsActive() && robot.frontLeft.isBusy()){
+        // Checks to see if the target destination is reached
+        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
             telemetry.addData("Front_Left Position: ", robot.frontLeft.getCurrentPosition());
             telemetry.update();
-            // Checks to see if the target destination is reached
-            if (robot.frontLeft.getCurrentPosition() == targetTicks){
-                robot.setMotorPower(0);
-            }
         }
-        // Just in case
+        // Stops the robot when it leaves the loop
         robot.setMotorPower(0);
+
+        // Resets robot to work without encoders
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
     // Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
     public void resetAngle(){
         previousAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -141,7 +148,7 @@ public class NakulAuto extends LinearOpMode {
         if (deltaAngle > 180){
             deltaAngle -= 360;
         }
-        else if (deltaAngle <= -180){
+        else if (deltaAngle < -180){
             deltaAngle += 360;
         }
 
@@ -161,11 +168,13 @@ public class NakulAuto extends LinearOpMode {
         double error = degrees;
         // Keeps turning until within +- 2 degrees of target
         while (opModeIsActive() && Math.abs(error) > 2){
+            // If the error is in the negative direction, go -0.3 power
             double motorPower = (error < 0 ? -0.3 : 0.3);
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
             // Updates the error
             error = degrees - getAngle();
             telemetry.addData("error", error);
+            telemetry.addData("Power", motorPower);
             telemetry.update();
         }
 
