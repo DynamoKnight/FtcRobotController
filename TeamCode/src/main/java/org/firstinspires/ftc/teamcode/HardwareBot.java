@@ -51,7 +51,7 @@ public class HardwareBot {
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
-    public Servo servoClaw;
+    public Servo servoDrone;
     public DcMotor elevator;
     public BNO055IMU imu;
     public Orientation angles;
@@ -76,8 +76,8 @@ public class HardwareBot {
         frontRight = hardwareMap.get(DcMotor.class, Config.DRIVE_FRONT_RIGHT);
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
-        //servoClaw = hardwareMap.get(Servo.class, Config.SERVO_CLAW);
-        //elevator = hardwareMap.get(DcMotor.class, Config.MOTOR_ELEVATOR);
+        servoDrone = hardwareMap.get(Servo.class, Config.SERVO_DRONE);
+        elevator = hardwareMap.get(DcMotor.class, Config.MOTOR_ELEVATOR);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -114,13 +114,10 @@ public class HardwareBot {
         //RevHubOrientationOnRobot.LogoFacingDirection.RIGHT
         //RevHubOrientationOnRobot.UsbFacingDirection.UP
 
-        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-
-
-        /*elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setTargetPosition(0);
-        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         encoder_resolution = Config.ENCODER_RESOLUTION;
         mc_diameter = Config.MECANUM_WHEEL_DIAMETER;

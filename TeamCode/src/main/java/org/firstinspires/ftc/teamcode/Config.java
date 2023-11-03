@@ -32,4 +32,7 @@ public class Config {
     public static volatile double CLAW_CLOSE_ANGLE = -20;
     public static volatile double CLAW_OPEN_ANGLE = 50;
 
+    // Drone Launcher
+    public static volatile String SERVO_DRONE = "servo_drone";
+
 }

@@ -12,6 +12,7 @@ public class NakulOpMode extends LinearOpMode {
     //VARIABLES
     //////////////////////
     HardwareBot robot = new HardwareBot();
+    NakulAuto auto;
 
     //////////////////////
     //METHODS
@@ -23,6 +24,8 @@ public class NakulOpMode extends LinearOpMode {
         int ticks = 0;
 
         robot.init(hardwareMap);
+        auto = new NakulAuto();
+
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -99,34 +102,40 @@ public class NakulOpMode extends LinearOpMode {
             }
 
             if (gamepad1.dpad_up){
-                ticks += 50;
-                //robot.elevator.setTargetPosition(ticks);
-                //robot.elevator.setPower(0.8);
+                if (robot.elevator != null){
+                    ticks += 50;
+                    robot.elevator.setTargetPosition(ticks);
+                    robot.elevator.setPower(0.8);
+                }
+
             }
             if (gamepad1.dpad_down){
-                ticks -= 50;
-                //robot.elevator.setTargetPosition(ticks);
-                //robot.elevator.setPower(0.4);
+                if (robot.elevator != null) {
+                    ticks -= 50;
+                    robot.elevator.setTargetPosition(ticks);
+                    robot.elevator.setPower(0.4);
+                }
             }
             // Rotate 90 degress left
             if (gamepad1.dpad_left){
-                robot.frontRight.setPower(0.8);
-                robot.backRight.setPower(0.8);
-                robot.frontLeft.setPower(-0.8);
-                robot.backLeft.setPower(-0.8);
+                auto.turnPID(90);
             }
             // Rotate 90 degress right
             if (gamepad1.dpad_right) {
-
+                auto.turnPID(-90);
             }
 
             // Open Claw
             if(gamepad1.a){
-                //robot.servoClaw.setPosition(0);
+                if (robot.servoDrone != null){
+                    robot.servoDrone.setPosition(0);
+                }
             }
             // Close Claw
             if (gamepad1.x){
-                //robot.servoClaw.setPosition(1);
+                if (robot.servoDrone != null){
+                    robot.servoDrone.setPosition(1);
+                }
             }
 
             telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");

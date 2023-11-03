@@ -26,11 +26,22 @@ public class NakulAuto extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-    HardwareBot robot = new HardwareBot();
-    private ElapsedTime runtime = new ElapsedTime();
+    HardwareBot robot;
+    private ElapsedTime runtime;
 
-    private Orientation previousAngles = new Orientation();
-    private double currentAngle = 0.0;
+    private Orientation previousAngles;
+    private double currentAngle;
+
+
+    //////////////////////
+    //CONSTRUCTOR
+    //////////////////////
+    public NakulAuto(){
+        robot = new HardwareBot();
+        ElapsedTime runtime = new ElapsedTime();
+        previousAngles = new Orientation();
+        currentAngle = 0.0;
+    }
 
     //////////////////////
     //MAIN METHOD
