@@ -25,14 +25,17 @@ public class Config {
     public static volatile double DRIVE_TURN_SENSITIVITY = 1;
 
     // Elevator
-    public static volatile String MOTOR_ELEVATOR = "motor_elevator";
+    public static volatile String SLIDE = "slide_servo";
 
     // Claw
-    public static volatile String SERVO_CLAW = "servo_claw";
-    public static volatile double CLAW_CLOSE_ANGLE = -20;
-    public static volatile double CLAW_OPEN_ANGLE = 50;
+    public static volatile String CLAW = "claw_servo";
+
+    public static volatile String CLAW_ROTATION = "claw_rotation_servo";
+
+    // Climber
+    public static volatile String CLIMBER = "climber";
 
     // Drone Launcher
-    public static volatile String SERVO_DRONE = "servo_drone";
+    public static volatile String DRONE = "drone_servo";
 
 }

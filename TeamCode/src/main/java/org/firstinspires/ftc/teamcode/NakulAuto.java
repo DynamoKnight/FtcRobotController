@@ -8,10 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.ftccommon.internal.manualcontrol.parameters.ImuParameters;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -19,29 +21,32 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.lang.annotation.Target;
 
-@Autonomous(name = "NakulAuto", group = "")
-//@TeleOp
 
-public class NakulAuto extends LinearOpMode {
-    //////////////////////
+@Autonomous(name = "auto", group = "")
+
+public class NakulAuto extends LinearOpMode{
+    //////////////////////+
     //VARIABLES
     //////////////////////
-    HardwareBot robot;
+    public enum Side{
+        BLUE_FRONT,
+        BLUE_BACK,
+        RED_FRONT,
+        RED_BACK
+    }
+
+    HardwareBot robot = new HardwareBot();
     private ElapsedTime runtime;
 
-    private Orientation previousAngles;
-    private double currentAngle;
+    private Orientation previousAngles = new Orientation();;
+    private double currentAngle=0.0;
+    private Side side;
 
 
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulAuto(){
-        robot = new HardwareBot();
-        ElapsedTime runtime = new ElapsedTime();
-        previousAngles = new Orientation();
-        currentAngle = 0.0;
-    }
+
 
     //////////////////////
     //MAIN METHOD
@@ -54,6 +59,8 @@ public class NakulAuto extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+        sleep(1000);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -61,13 +68,41 @@ public class NakulAuto extends LinearOpMode {
         waitForStart();
         //timer.reset();
 
+        // Runs the different paths for each starting position
+        // BLUE Team Audience Side
+        if(side == Side.BLUE_FRONT){
+            goToTarget(60, 0.8);
+            goToTarget(-10, -0.5);
+            turnPID(90);
+            //goToTarget(183, 0.8);
+            return;
+        }
+        // BLUE Team Wall Side
+        else if(side == Side.BLUE_BACK){
+            return;
+        }
+        // RED Team Audience Side
+        else if(side == Side.RED_FRONT){
+            return;
+        }
+        // RED Team Wall Side
+        else if(side == Side.RED_BACK){
+            return;
+        }
+
         // Run and then Stop after finishing
         // move forward for two seconds
         if (opModeIsActive()) {
-            //moveForward();
-            gyroTest();
+            return;
         }
     }
+
+
+    public void runOpMode(Side side) throws InterruptedException {
+        this.side = side;
+        runOpMode();
+    }
+
     //////////////////////
     //TESTING METHODS
     //////////////////////
@@ -79,6 +114,7 @@ public class NakulAuto extends LinearOpMode {
         goToTarget(20, 0.5);
         // Sleepy time...
         sleep(1000);
+
     }
 
     // Tests the IMU and PID Control System

@@ -51,8 +51,11 @@ public class HardwareBot {
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
-    public Servo servoDrone;
-    public DcMotor elevator;
+    public DcMotor climber;
+    public Servo drone;
+    public Servo elevator;
+    public Servo rotation;
+    public Servo claw;
     public BNO055IMU imu;
     public Orientation angles;
     public double encoder_resolution;
@@ -76,8 +79,11 @@ public class HardwareBot {
         frontRight = hardwareMap.get(DcMotor.class, Config.DRIVE_FRONT_RIGHT);
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
-        servoDrone = hardwareMap.get(Servo.class, Config.SERVO_DRONE);
-        elevator = hardwareMap.get(DcMotor.class, Config.MOTOR_ELEVATOR);
+        climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
+        drone = hardwareMap.get(Servo.class, Config.DRONE);
+        elevator = hardwareMap.get(Servo.class, Config.SLIDE);
+        rotation = hardwareMap.get(Servo.class, Config.CLAW_ROTATION);
+        claw = hardwareMap.get(Servo.class, Config.CLAW);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -114,10 +120,12 @@ public class HardwareBot {
         //RevHubOrientationOnRobot.LogoFacingDirection.RIGHT
         //RevHubOrientationOnRobot.UsbFacingDirection.UP
 
-        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        elevator.setTargetPosition(0);
-        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // Climber Motor
+        /*climber.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        climber.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        climber.setTargetPosition(0);
+        climber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        */
 
         encoder_resolution = Config.ENCODER_RESOLUTION;
         mc_diameter = Config.MECANUM_WHEEL_DIAMETER;

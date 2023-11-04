@@ -101,40 +101,68 @@ public class NakulOpMode extends LinearOpMode {
                 speed = 1;
             }
 
-            if (gamepad1.dpad_up){
-                if (robot.elevator != null){
-                    ticks += 50;
-                    robot.elevator.setTargetPosition(ticks);
-                    robot.elevator.setPower(0.8);
-                }
-
-            }
-            if (gamepad1.dpad_down){
-                if (robot.elevator != null) {
-                    ticks -= 50;
-                    robot.elevator.setTargetPosition(ticks);
-                    robot.elevator.setPower(0.4);
-                }
-            }
             // Rotate 90 degress left
             if (gamepad1.dpad_left){
-                auto.turnPID(90);
+                //auto.turnPID(90);
             }
             // Rotate 90 degress right
             if (gamepad1.dpad_right) {
-                auto.turnPID(-90);
+                //auto.turnPID(-90);
+            }
+            // Moves Linear slide up
+            if (gamepad1.a){
+                if (robot.elevator != null){
+                    robot.elevator.setPosition(0.45);
+                    /*
+                    ticks += 50;
+                    robot.elevator.setTargetPosition(ticks);
+                    robot.elevator.setPower(0.8);
+                    */
+                }
+
+            }
+            // Moves Linear slide down
+            if (gamepad1.b) {
+                if (robot.elevator != null) {
+                    robot.elevator.setPosition(0);
+                    /*
+                    ticks -= 50;
+                    robot.elevator.setTargetPosition(ticks);
+                    robot.elevator.setPower(0.4);
+                    */
+                }
             }
 
+            // Moves Climber Up
+            if(gamepad1.dpad_up) {
+                if (robot.climber != null) {
+                    robot.climber.setPower(0.5);
+                }
+            }
+            // Climber hooks on
+            if(gamepad1.dpad_down) {
+                if (robot.climber != null) {
+                    robot.climber.setPower(-0.5);
+                }
+            }
+
+
+            // Launch Drone
+            if(gamepad1.right_trigger > 0.1){
+                if (robot.drone != null){
+                    robot.drone.setPosition(0);
+                }
+            }
             // Open Claw
-            if(gamepad1.a){
-                if (robot.servoDrone != null){
-                    robot.servoDrone.setPosition(0);
+            if (gamepad1.x){
+                if (robot.claw != null){
+                    robot.claw.setPosition(0.65);
                 }
             }
             // Close Claw
-            if (gamepad1.x){
-                if (robot.servoDrone != null){
-                    robot.servoDrone.setPosition(1);
+            if (gamepad1.y){
+                if (robot.claw != null){
+                    robot.claw.setPosition(0.55);
                 }
             }
 
