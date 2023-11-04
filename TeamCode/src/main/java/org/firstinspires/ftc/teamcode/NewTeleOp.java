@@ -1,19 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 // The hardware object is referenced
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Disabled
-@TeleOp(name = "NakulTeleOp", group = "")
+@TeleOp(name = "NewTeleOp", group = "")
 //@Autonomous
 
-public class NakulOpMode extends LinearOpMode {
+public class NewTeleOp extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-    HardwareBot robot = new HardwareBot();
+    NewHardwareBot robot = new NewHardwareBot();
     NakulAuto auto;
 
     //////////////////////
@@ -27,6 +25,8 @@ public class NakulOpMode extends LinearOpMode {
 
         robot.init(hardwareMap);
         auto = new NakulAuto();
+
+        robot.claw.setPosition(0.5);
 
 
         telemetry.addData("Status", "Initialized");
@@ -95,77 +95,36 @@ public class NakulOpMode extends LinearOpMode {
             if (gamepad1.left_stick_x < 0.1 && gamepad1.left_stick_x > -0.1){
                 gamepad1.left_stick_x = 0;
             }
-            // Slow mode
+            // Sprint button
             if (gamepad1.left_bumper){
-                speed = 0.4;
+                speed = 0.7;
             }
             else{
-                speed = 1;
+                speed = 0.2;
             }
 
-            // Rotate 90 degress left
-            if (gamepad1.dpad_left){
-                //auto.turnPID(90);
-            }
-            // Rotate 90 degress right
-            if (gamepad1.dpad_right) {
-                //auto.turnPID(-90);
-            }
-            // Moves Linear slide up
-            if (gamepad1.a){
-                if (robot.elevator != null){
-                    robot.elevator.setPosition(0.45);
-                    /*
-                    ticks += 50;
-                    robot.elevator.setTargetPosition(ticks);
-                    robot.elevator.setPower(0.8);
-                    */
-                }
-
-            }
-            // Moves Linear slide down
-            if (gamepad1.b) {
-                if (robot.elevator != null) {
-                    robot.elevator.setPosition(0);
-                    /*
-                    ticks -= 50;
-                    robot.elevator.setTargetPosition(ticks);
-                    robot.elevator.setPower(0.4);
-                    */
-                }
+            if (gamepad1.dpad_up) {
+                robot.climber.setPower(1);
+            } else if (gamepad1.dpad_down) {
+                robot.climber.setPower(-1);
+            } else {
+                robot.climber.setPower(0);
             }
 
-            // Moves Climber Up
-            if(gamepad1.dpad_up) {
-                if (robot.climber != null) {
-                    robot.climber.setPower(0.5);
-                }
-            }
-            // Climber hooks on
-            if(gamepad1.dpad_down) {
-                if (robot.climber != null) {
-                    robot.climber.setPower(-0.5);
-                }
+            if (gamepad1.dpad_left) {
+                robot.climber.setPower(-0.25);
+            } else if (gamepad1.dpad_right) {
+                robot.climber.setPower(0.25);
+            } else {
+                robot.climber.setPower(0);
             }
 
+            if (gamepad1.a) {
+                robot.claw.setPosition(1);
+            }
 
-            // Launch Drone
-            if(gamepad1.right_trigger > 0.1){
-                if (robot.drone != null){
-                    robot.drone.setPosition(0);
-                }
-            }
-            // Open Claw
-            if (gamepad1.x){
-                if (robot.claw != null){
-                    robot.claw.setPosition(0.65);
-                }
-            }
-            // Close Claw
-            if (gamepad1.y){
-                if (robot.claw != null){
-                    robot.claw.setPosition(0.55);
-                }
+            if (gamepad1.x) {
+                robot.claw.setPosition(0.5);
             }
 
             telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");
