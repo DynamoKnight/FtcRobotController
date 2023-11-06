@@ -24,11 +24,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.lang.annotation.Target;
 
-@Disabled
-@Autonomous(name = "auto", group = "")
+@Autonomous(name = "NakulAuto", group = "")
 
 public class NakulAuto extends LinearOpMode{
-    //////////////////////+
+    //////////////////////
     //VARIABLES
     //////////////////////
     public enum Side{
@@ -38,11 +37,11 @@ public class NakulAuto extends LinearOpMode{
         RED_BACK
     }
 
-    HardwareBot robot = new HardwareBot();
+    NewHardwareBot robot = new NewHardwareBot();
     private ElapsedTime runtime;
 
     private Orientation previousAngles = new Orientation();;
-    private double currentAngle=0.0;
+    private double currentAngle = 0.0;
     private Side side;
 
 
@@ -59,23 +58,28 @@ public class NakulAuto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         double speed = 1;
         int ticks = 0;
-
         robot.init(hardwareMap);
-
-        sleep(1000);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
         //timer.reset();
+        sleep(500);
+
+        goToTarget(115, 0.5);
+        goToTarget(-8, -0.2);
+        sleep(3000);
+
+        //turnPID(90);
 
         // Runs the different paths for each starting position
         // BLUE Team Audience Side
         if(side == Side.BLUE_FRONT){
-            goToTarget(60, 0.8);
-            goToTarget(-10, -0.5);
+            goToTarget(115, 0.5);
+            goToTarget(-8, -0.2);
+            sleep(3000);
             turnPID(90);
             //goToTarget(183, 0.8);
             return;
@@ -93,11 +97,6 @@ public class NakulAuto extends LinearOpMode{
             return;
         }
 
-        // Run and then Stop after finishing
-        // move forward for two seconds
-        if (opModeIsActive()) {
-            return;
-        }
     }
 
 

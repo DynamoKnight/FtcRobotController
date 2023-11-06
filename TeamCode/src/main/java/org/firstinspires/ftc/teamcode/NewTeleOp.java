@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 // The hardware object is referenced
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+//@Disabled
 @TeleOp(name = "NewTeleOp", group = "")
 //@Autonomous
 
@@ -26,7 +28,7 @@ public class NewTeleOp extends LinearOpMode {
         robot.init(hardwareMap);
         auto = new NakulAuto();
 
-        robot.claw.setPosition(0.5);
+        robot.claw.setPosition(0.15);
 
 
         telemetry.addData("Status", "Initialized");
@@ -84,7 +86,6 @@ public class NewTeleOp extends LinearOpMode {
             robot.backLeft.setPower(speeds[2] * speed);
             robot.backRight.setPower(speeds[3] * speed);
 
-
             // Prevents stick drift
             if (gamepad1.right_stick_x < 0.1 && gamepad1.right_stick_x > -0.1){
                 gamepad1.right_stick_x = 0;
@@ -111,18 +112,11 @@ public class NewTeleOp extends LinearOpMode {
                 robot.climber.setPower(0);
             }
 
-            if (gamepad1.dpad_left) {
-                robot.climber.setPower(-0.25);
-            } else if (gamepad1.dpad_right) {
-                robot.climber.setPower(0.25);
-            } else {
-                robot.climber.setPower(0);
-            }
-
+            // Close Claw
             if (gamepad1.a) {
                 robot.claw.setPosition(1);
             }
-
+            // Open Claw
             if (gamepad1.x) {
                 robot.claw.setPosition(0.5);
             }
