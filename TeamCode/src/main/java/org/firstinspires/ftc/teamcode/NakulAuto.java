@@ -30,6 +30,7 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //VARIABLES
     //////////////////////
+    // An enum is a group of constants.
     public enum Side{
         BLUE_FRONT,
         BLUE_BACK,
@@ -37,7 +38,7 @@ public class NakulAuto extends LinearOpMode{
         RED_BACK
     }
 
-    NewHardwareBot robot = new NewHardwareBot();
+    HardwareBot robot = new HardwareBot();
     private ElapsedTime runtime;
 
     private Orientation previousAngles = new Orientation();;
@@ -58,6 +59,8 @@ public class NakulAuto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         double speed = 1;
         int ticks = 0;
+
+        // Initialize Robot and Positions
         robot.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
@@ -68,12 +71,9 @@ public class NakulAuto extends LinearOpMode{
         //timer.reset();
         sleep(500);
 
-        goToTarget(115, 0.5);
-        goToTarget(-8, -0.2);
-        sleep(3000);
-
-        //turnPID(90);
-
+        //////////////////////
+        // AUTONOMOUS BASED ON POSITION
+        //////////////////////
         // Runs the different paths for each starting position
         // BLUE Team Audience Side
         if(side == Side.BLUE_FRONT){
@@ -96,6 +96,17 @@ public class NakulAuto extends LinearOpMode{
         else if(side == Side.RED_BACK){
             return;
         }
+        //////////////////////
+        // MAIN AUTONOMOUS
+        //////////////////////
+        else {
+            goToTarget(115, 0.5);
+            goToTarget(-8, -0.2);
+            sleep(3000);
+            //turnPID(90);
+        }
+
+
 
     }
 

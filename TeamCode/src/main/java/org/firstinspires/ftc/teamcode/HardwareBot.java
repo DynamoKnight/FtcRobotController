@@ -52,10 +52,8 @@ public class HardwareBot {
     public DcMotor backLeft;
     public DcMotor backRight;
     public DcMotor climber;
-    public Servo drone;
-    public Servo elevator;
-    public Servo rotation;
     public Servo claw;
+    public Servo drone;
     public BNO055IMU imu;
     public Orientation angles;
     public double encoder_resolution;
@@ -80,9 +78,6 @@ public class HardwareBot {
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
-        drone = hardwareMap.get(Servo.class, Config.DRONE);
-        elevator = hardwareMap.get(Servo.class, Config.SLIDE);
-        rotation = hardwareMap.get(Servo.class, Config.CLAW_ROTATION);
         claw = hardwareMap.get(Servo.class, Config.CLAW);
 
         // The Left side axle points are in opposite direction

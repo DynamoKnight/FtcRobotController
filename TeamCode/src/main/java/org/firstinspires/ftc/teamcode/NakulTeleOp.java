@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
 // The hardware object is referenced
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 //@Disabled
-@TeleOp(name = "NewTeleOp", group = "")
+@TeleOp(name = "TeleOp", group = "")
 //@Autonomous
 
-public class NewTeleOp extends LinearOpMode {
+public class NakulTeleOp extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-    NewHardwareBot robot = new NewHardwareBot();
+    HardwareBot robot = new HardwareBot();
     NakulAuto auto;
 
     //////////////////////
@@ -28,6 +27,7 @@ public class NewTeleOp extends LinearOpMode {
         robot.init(hardwareMap);
         auto = new NakulAuto();
 
+        // Claw rests at back
         robot.claw.setPosition(0.15);
 
 
@@ -86,6 +86,9 @@ public class NewTeleOp extends LinearOpMode {
             robot.backLeft.setPower(speeds[2] * speed);
             robot.backRight.setPower(speeds[3] * speed);
 
+            //////////////////////
+            //GAMEPAD 1
+            //////////////////////
             // Prevents stick drift
             if (gamepad1.right_stick_x < 0.1 && gamepad1.right_stick_x > -0.1){
                 gamepad1.right_stick_x = 0;
@@ -96,29 +99,67 @@ public class NewTeleOp extends LinearOpMode {
             if (gamepad1.left_stick_x < 0.1 && gamepad1.left_stick_x > -0.1){
                 gamepad1.left_stick_x = 0;
             }
+
             // Sprint button
             if (gamepad1.left_bumper){
                 speed = 0.7;
             }
+            // Regular Speed
             else{
                 speed = 0.2;
             }
 
+            // Climber moves up
             if (gamepad1.dpad_up) {
-                robot.climber.setPower(1);
-            } else if (gamepad1.dpad_down) {
-                robot.climber.setPower(-1);
-            } else {
-                robot.climber.setPower(0);
+                if (robot.climber != null) {
+                    robot.climber.setPower(1);
+                }
+            }
+            // Climber moves down
+            else if (gamepad1.dpad_down) {
+                if (robot.climber != null) {
+                    robot.climber.setPower(-1);
+                }
+            }
+            // Climber stops
+            else {
+                if (robot.climber != null) {
+                    robot.climber.setPower(0);
+                }
             }
 
             // Close Claw
             if (gamepad1.a) {
-                robot.claw.setPosition(1);
+                if (robot.claw != null) {
+                    robot.claw.setPosition(1);
+                }
             }
             // Open Claw
             if (gamepad1.x) {
-                robot.claw.setPosition(0.5);
+                if (robot.claw != null) {
+                    robot.claw.setPosition(0.5);
+                }
+            }
+
+            // Launch Drone
+            if(gamepad1.right_trigger > 0.5){
+                if (robot.drone != null){
+                    robot.drone.setPosition(0);
+                }
+            }
+
+            //////////////////////
+            //GAMEPAD 2
+            //////////////////////
+            // Prevents stick drift
+            if (gamepad2.right_stick_x < 0.1 && gamepad2.right_stick_x > -0.1){
+                gamepad2.right_stick_x = 0;
+            }
+            if (gamepad2.left_stick_y < 0.1 && gamepad2.left_stick_y > -0.1){
+                gamepad2.left_stick_y = 0;
+            }
+            if (gamepad2.left_stick_x < 0.1 && gamepad2.left_stick_x > -0.1){
+                gamepad2.left_stick_x = 0;
             }
 
             telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");
