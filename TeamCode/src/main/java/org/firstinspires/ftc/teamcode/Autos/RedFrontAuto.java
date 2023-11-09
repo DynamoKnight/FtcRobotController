@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autos;
 
 // The hardware object is referenced
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -6,11 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NakulAuto;
+
 @Disabled
-@Autonomous(name = "BlueFrontAuto", group = "")
+@Autonomous(name = "RedFrontAuto", group = "")
 //@TeleOp
 
-public class BlueFrontAuto extends NakulAuto {
+public class RedFrontAuto extends NakulAuto {
 
 
     //////////////////////
@@ -18,7 +20,6 @@ public class BlueFrontAuto extends NakulAuto {
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        super.runOpMode(Side.BLUE_FRONT);
+        super.runOpMode(Side.RED_FRONT);
     }
 }
-
