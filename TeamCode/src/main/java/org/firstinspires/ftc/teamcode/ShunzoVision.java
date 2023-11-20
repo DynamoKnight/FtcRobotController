@@ -33,7 +33,8 @@ public class TestPipeline extends OpenCvPipeline {
         CENTER,
         RIGHT
     }
-    Position pos = Position.CENTER;
+    
+    Position pos = Position.CENTER; // holds the best match
     // A Matrix stores image data
     Mat blue = new Mat();
     // Rectangles
@@ -62,21 +63,28 @@ public class TestPipeline extends OpenCvPipeline {
         double avg2 = Core.mean(area2).val[0];
         double avg3 = Core.mean(area3).val[0];
         // Creates a visual representation to be seen on the camera
+        // (sets the three areas that the code is looking at to be 
+        // default bordered in blue) (the best match is outlined in
+        // green)
         Imgproc.rectangle(input, box1, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box2, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box3, new Scalar(0,0,255), 2);
-        // Finds the darkest color value, and borders green
+        // Finds the darkest color value 
+        // ??? why would we want darkest - don't we want brightest? - shunzo
         double min = Math.min(avg3, Math.min(avg1, avg2));
         if (min == avg1){
-            pos = Position.LEFT;
+            pos = Position.LEFT; // set best match
+            // display box1 as the best match
             Imgproc.rectangle(input, box1, new Scalar(0,255,0), 2);
         }
         else if (min == avg2){
             pos = Position.CENTER;
+            // display box2 as the best match
             Imgproc.rectangle(input, box2, new Scalar(0,255,0), 2);
         }
         else if (min == avg3){
             pos = Position.RIGHT;
+            // display box3 as the best match
             Imgproc.rectangle(input, box3, new Scalar(0,255,0), 2);
         }
         telemetry.addData("Position", pos);
