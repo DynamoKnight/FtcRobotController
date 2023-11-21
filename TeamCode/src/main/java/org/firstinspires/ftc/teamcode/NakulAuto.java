@@ -31,7 +31,7 @@ public class NakulAuto extends LinearOpMode{
     //VARIABLES
     //////////////////////
     // An enum is a group of constants.
-    public enum Side{
+    public static enum Side{
         BLUE_FRONT,
         BLUE_BACK,
         RED_FRONT,
@@ -49,7 +49,9 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
+    public NakulAuto(){
 
+    }
 
     //////////////////////
     //MAIN METHOD
@@ -69,7 +71,8 @@ public class NakulAuto extends LinearOpMode{
         waitForStart();
 
         //timer.reset();
-        sleep(500);
+        sleep(3000);
+        movePIDTest();
 
         //////////////////////
         // AUTONOMOUS BASED ON POSITION
@@ -120,29 +123,40 @@ public class NakulAuto extends LinearOpMode{
     //TESTING METHODS
     //////////////////////
 
-    // Tests the robot moving forward
-    public void moveForward(){
+    // Tests the robot with PID
+    public void movePIDTest(){
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        // Sets the target for the robot to travel
-        goToTarget(20, 0.5);
-        // Sleepy time...
-        sleep(1000);
+        double targetAngle = 90;
+        double targetDistance = robot.distanceToTicks(20);
+        PIDController test = new PIDController(0.01, 0, 0.003);
+
+        double error = targetDistance - robot.frontLeft.getCurrentPosition();
+        //double error = angleWrap(targetAngle - robot.imu.getAngularOrientation().firstAngle);
+
+        // Stop when error is within 2 cm or 2 deg
+        while (opModeIsActive() && Math.abs(error) > 2){
+            double power = test.PIDControl(error);
+            //double power = test.PIDControl(error);
+            robot.setMotorPower(power);
+        }
+        robot.setMotorPower(0);
+
 
     }
 
     // Tests the IMU and PID Control System
     public void gyroTest(){
-
+        // Sets the target for the robot to travel
         goToTarget(100, 0.5);
+        // Sleepy time...
         sleep(3000);
-
-        /*turn(90);
-        sleep(3000);
-        turnTo(-90);
-        sleep(5000);*/
-
 
         turnPID(90);
+        sleep(2000);
     }
 
     //////////////////////
@@ -289,6 +303,18 @@ public class NakulAuto extends LinearOpMode{
     // Turns to the relative angle
     void turnPID(double degrees){
         turnToPID(degrees + getAbsoluteAngle());
+    }
+
+    // Returns best angle
+    public double angleWrap(double degrees) {
+        // Gets angle within ±180
+        while (degrees > 180){
+            degrees -= 360;
+        }
+        while (degrees < -180){
+            degrees += 360;
+        }
+        return degrees;
     }
 }
 

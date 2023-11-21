@@ -16,7 +16,8 @@ public class Config {
     public static volatile String DRIVE_BACK_LEFT = "drive_back_left";
     public static volatile String DRIVE_BACK_RIGHT = "drive_back_right";
     public static volatile double ENCODER_RESOLUTION = 537.7;
-    public static double MECANUM_WHEEL_DIAMETER = 9.6; // Centimeters
+    // 9.6 cm small, 14.0 cm big
+    public static double MECANUM_WHEEL_DIAMETER = 14.0; // Centimeters
 
     public static volatile double DRIVE_CURVE = 1.5;
     public static volatile double DRIVE_DEAD_ZONE = 0.05;

@@ -5,22 +5,25 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.NakulAuto.Side;
 
 import org.firstinspires.ftc.teamcode.NakulAuto;
 
-@Disabled
+//@Disabled
 @Autonomous(name = "BlueFrontAuto", group = "")
 //@TeleOp
 
-public class BlueFrontAuto extends NakulAuto {
-
+public class BlueFrontAuto extends LinearOpMode {
+    //////////////////////
+    //VARIABLES
+    //////////////////////
+    public NakulAuto auto = new NakulAuto();
 
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        super.runOpMode(Side.BLUE_FRONT);
+        auto.runOpMode(Side.BLUE_FRONT);
     }
 }
-

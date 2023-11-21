@@ -35,11 +35,11 @@ public class TestPipeline extends OpenCvPipeline {
     }
     Position pos = Position.CENTER;
     // A Matrix stores image data
-    Mat blue = new Mat();
+    Mat color = new Mat();
     // Rectangles
-    Rect box1 = new Rect(0,0,30,30);
-    Rect box2 = new Rect(100,0,30,30);
-    Rect box3 = new Rect(200,0,30,30);
+    public static Rect box1 = new Rect(0,100,30,30);
+    public static Rect box2 = new Rect(100,100,30,30);
+    public static Rect box3 = new Rect(200,100,30,30);
 
     //////////////////////
     //METHODS
@@ -51,12 +51,21 @@ public class TestPipeline extends OpenCvPipeline {
         // Based on the color channel, it evaluates a greyscale channel where
         // the darkest color is the least of the color, and
         // the brightest color is the most of the color.
+
+        /*
+        // Turns from RGB into HSV
+        Imgproc.cvtColor(input, color, Imgproc.COLOR_RGB2HSV);
+        // Defines the range of red color in HSV
+        Scalar lowerHSV = new Scalar(0, 100, 100);
+        Scalar upperHSV = new Scalar(10, 255, 255);
+        Core.inRange(input, lowerHSV, upperHSV, input);
+        */
         // rgb - 012
-        Core.extractChannel(input, blue, 2);
+        Core.extractChannel(input, color, 1);
         // Creates a submat based on the area of the box
-        Mat area1 = blue.submat(box1);
-        Mat area2 = blue.submat(box2);
-        Mat area3 = blue.submat(box3);
+        Mat area1 = color.submat(box1);
+        Mat area2 = color.submat(box2);
+        Mat area3 = color.submat(box3);
         // Finds the average color value of the channel in the rectangle
         double avg1 = Core.mean(area1).val[0];
         double avg2 = Core.mean(area2).val[0];
@@ -65,7 +74,7 @@ public class TestPipeline extends OpenCvPipeline {
         Imgproc.rectangle(input, box1, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box2, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box3, new Scalar(0,0,255), 2);
-        // Finds the darkest color value, and borders green
+        // Finds the darkest color value, and makes a green border
         double min = Math.min(avg3, Math.min(avg1, avg2));
         if (min == avg1){
             pos = Position.LEFT;
@@ -87,7 +96,7 @@ public class TestPipeline extends OpenCvPipeline {
         }
         // Shows the greyscale channel
         else{
-            return blue;
+            return color;
         }
     }
     // Returns the current position where the desired object is
