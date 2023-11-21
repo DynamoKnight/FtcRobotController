@@ -69,20 +69,19 @@ public class ShunzoPipeline extends OpenCvPipeline {
         Imgproc.rectangle(input, box1, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box2, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box3, new Scalar(0,0,255), 2);
-        // Finds the darkest color value 
-        // ??? why would we want darkest - don't we want brightest? - shunzo
-        double min = Math.min(avg3, Math.min(avg1, avg2));
-        if (min == avg1){
+        // Finds the brightest (ie with the greatest color)
+        double best = Math.max(avg3, Math.max(avg1, avg2));
+        if (best == avg1){
             pos = Position.LEFT; // set best match
             // display box1 as the best match
             Imgproc.rectangle(input, box1, new Scalar(0,255,0), 2);
         }
-        else if (min == avg2){
+        else if (best == avg2){
             pos = Position.CENTER;
             // display box2 as the best match
             Imgproc.rectangle(input, box2, new Scalar(0,255,0), 2);
         }
-        else if (min == avg3){
+        else if (best == avg3){
             pos = Position.RIGHT;
             // display box3 as the best match
             Imgproc.rectangle(input, box3, new Scalar(0,255,0), 2);
