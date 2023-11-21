@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 @TeleOp(name = "Detection", group = "")
@@ -16,7 +15,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 public class TestCameraAuto extends LinearOpMode {
 
     OpenCvWebcam camera;
-    TestPipeline pipeline;
+    NakulPipeline pipeline;
 
     @Override
     public void runOpMode(){
@@ -24,7 +23,7 @@ public class TestCameraAuto extends LinearOpMode {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
-        pipeline = new TestPipeline(telemetry);
+        pipeline = new NakulPipeline(telemetry);
 
         camera.setPipeline(pipeline);
 
@@ -46,7 +45,7 @@ public class TestCameraAuto extends LinearOpMode {
         // Displays on FTC Dashboard
         FtcDashboard.getInstance().startCameraStream(camera, 0);
         waitForStart();
-        TestPipeline.Position position = pipeline.getPos();
+        NakulPipeline.Position position = pipeline.getPos();
     }
 
 }

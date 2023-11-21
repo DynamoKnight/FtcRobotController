@@ -12,12 +12,12 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class TestPipeline extends OpenCvPipeline {
+public class NakulPipeline extends OpenCvPipeline {
 
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public TestPipeline(Telemetry telemetry){
+    public NakulPipeline(Telemetry telemetry){
         this.telemetry = telemetry;
     }
 
