@@ -89,6 +89,7 @@ public class NakulAuto extends LinearOpMode{
         }
         // BLUE Team Wall Side
         else if(side == Side.BLUE_BACK){
+            turnPID(90);
             return;
         }
         // RED Team Audience Side
