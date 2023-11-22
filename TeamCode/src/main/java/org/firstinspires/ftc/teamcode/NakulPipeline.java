@@ -42,6 +42,10 @@ public class NakulPipeline extends OpenCvPipeline {
     public static Rect box2 = new Rect(100,100,30,30);
     public static Rect box3 = new Rect(200,100,30,30);
 
+    // Sets the lower-bound and upper-bound RGB Range to search
+    // Needs to be tuned to get best search
+
+    // RED
     public static int lowerR = 150;
     public static int lowerG = 0;
     public static int lowerB = 0;
@@ -50,6 +54,16 @@ public class NakulPipeline extends OpenCvPipeline {
     public static int upperG = 255;
     public static int upperB = 255;
 
+    // BLUE
+    /*
+    public static int lowerR = 0;
+    public static int lowerG = 0;
+    public static int lowerB = 0;
+
+    public static int upperR = 255;
+    public static int upperG = 255;
+    public static int upperB = 255;
+    */
 
     //////////////////////
     //METHODS
@@ -63,21 +77,21 @@ public class NakulPipeline extends OpenCvPipeline {
         // the darkest color is the least of the color, and
         // the brightest color is the most of the color.
 
-        /*
-        // Turns from RGB into HSV
-        Imgproc.cvtColor(input, color, Imgproc.COLOR_RGB2HSV);
-        // Defines the range of red color in HSV
-        Scalar lowerHSV = new Scalar(0, 100, 100);
-        Scalar upperHSV = new Scalar(10, 255, 255);
-        Core.inRange(input, lowerHSV, upperHSV, input);
-        */
+        // Converts to BGR because RGB doesn't work for some reason!!!
         Imgproc.cvtColor(input, tempMat, Imgproc.COLOR_RGB2BGR);
+        // Creates a small blur so that noise is removed
         Imgproc.GaussianBlur(tempMat, tempMat, new Size(5, 5), 0);
+        // Sets bounds for what the channel is based on
         Core.inRange(tempMat, new Scalar(lowerB, lowerG, lowerR), new Scalar(upperB, upperG, upperR), color);
         // rgb - 012
-       // Mat gray = new Mat();
-        //Imgproc.cvtColor(input, gray, Imgproc.COLOR_RGB2GRAY);
-        //Core.extractChannel(gray, color, 0);
+
+        /*
+        // Creates a greyscale channel
+        Mat grey = new Mat();
+        Imgproc.cvtColor(input, grey, Imgproc.COLOR_RGB2GRAY);
+        Core.extractChannel(grey, color, 0);
+        */
+
         // Creates a submat based on the area of the box
         Mat area1 = color.submat(box1);
         Mat area2 = color.submat(box2);
@@ -90,7 +104,8 @@ public class NakulPipeline extends OpenCvPipeline {
         Imgproc.rectangle(input, box1, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box2, new Scalar(0,0,255), 2);
         Imgproc.rectangle(input, box3, new Scalar(0,0,255), 2);
-        // Finds the darkest color value, and makes a green border
+        // Wherever the color is greatest, the object must be there
+        // Finds the best color value, and makes a green border
         double max = Math.max(avg3, Math.max(avg1, avg2));
         if (max == avg1){
             pos = Position.LEFT;
@@ -109,6 +124,7 @@ public class NakulPipeline extends OpenCvPipeline {
         telemetry.addData("Box 2", avg2);
         telemetry.addData("Box 3", avg3);
         telemetry.update();
+
         // Shows what the camera sees with rectangles
         if (returnInput){
             return input;
