@@ -25,7 +25,7 @@ public class NakulTeleOp extends LinearOpMode {
         int ticks = 0;
 
         robot.init(hardwareMap);
-        auto = new NakulAuto();
+        auto = new NakulAuto(hardwareMap, telemetry);
 
         // Claw rests at back
         robot.claw.setPosition(0.15);

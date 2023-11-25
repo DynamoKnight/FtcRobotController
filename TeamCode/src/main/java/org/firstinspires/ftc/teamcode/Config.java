@@ -8,6 +8,18 @@ public class Config {
     Robot WIFI: 22556-RC OR 22556-B-RC
     WIFI Password: BHS22556
     IP Address: http://192.168.43.1:8080/
+    FTC Setup Slides: https://docs.google.com/presentation/d/17UBroNhJ1QiZ4FxsuMDyzwsqthyI9WFedGaZPvKOX0o/edit?usp=sharing
+
+    Active Configuration:
+        Control Hub
+            Motor - drive_front_left
+            Motor - drive_back_left
+            I2C Bus 0 - BHI260APIMU
+        Expansion Hub 2
+            Motor - drive_front_right
+            Motor - drive_back_right
+            Motor - climber
+            I2C Bus 0 - BNO055IMU
      */
 
     // Drivetrain

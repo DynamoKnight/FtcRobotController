@@ -41,7 +41,7 @@ public class NakulAuto extends LinearOpMode{
     HardwareBot robot = new HardwareBot();
     private ElapsedTime runtime;
 
-    private Orientation previousAngles = new Orientation();;
+    private Orientation previousAngles = new Orientation();
     private double currentAngle = 0.0;
     private Side side;
 
@@ -49,8 +49,9 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulAuto(){
-
+    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry){
+        this.hardwareMap = hardwareMap;
+        this.telemetry = telemetry;
     }
 
     //////////////////////
@@ -110,16 +111,12 @@ public class NakulAuto extends LinearOpMode{
             //turnPID(90);
         }
 
-
-
     }
-
-
+    // Takes an enum to determine the starting position
     public void runOpMode(Side side) throws InterruptedException {
         this.side = side;
         runOpMode();
     }
-
     //////////////////////
     //TESTING METHODS
     //////////////////////

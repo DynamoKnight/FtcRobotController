@@ -17,13 +17,14 @@ public class RedFrontAuto extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-    public NakulAuto auto = new NakulAuto();
+    public NakulAuto auto;
 
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
+        auto = new NakulAuto(hardwareMap, telemetry);
         auto.runOpMode(Side.RED_FRONT);
     }
 }

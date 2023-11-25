@@ -38,27 +38,38 @@ public class NakulPipeline extends OpenCvPipeline {
     // A Matrix stores image data
     Mat color = new Mat();
     // Rectangles
-    public static Rect box1 = new Rect(0,100,30,30);
-    public static Rect box2 = new Rect(100,100,30,30);
-    public static Rect box3 = new Rect(200,100,30,30);
+    public static Rect box1 = new Rect(30,120,30,30);
+    public static Rect box2 = new Rect(145,120,30,30);
+    public static Rect box3 = new Rect(260,120,30,30);
 
     // Sets the lower-bound and upper-bound RGB Range to search
     // Needs to be tuned to get best search
 
     // RED
-    public static int lowerR = 150;
+    public static int lowerR = 110;
     public static int lowerG = 0;
     public static int lowerB = 0;
 
     public static int upperR = 255;
-    public static int upperG = 255;
+    public static int upperG = 90;
     public static int upperB = 255;
 
     // BLUE
     /*
     public static int lowerR = 0;
     public static int lowerG = 0;
-    public static int lowerB = 0;
+    public static int lowerB = 65;
+
+    public static int upperR = 70;
+    public static int upperG = 255;
+    public static int upperB = 255;
+    */
+
+    // WHITE
+    /*
+    public static int lowerR = 120;
+    public static int lowerG = 130;
+    public static int lowerB = 140;
 
     public static int upperR = 255;
     public static int upperG = 255;
