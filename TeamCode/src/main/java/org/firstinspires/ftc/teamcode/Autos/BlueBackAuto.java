@@ -19,7 +19,6 @@ public class BlueBackAuto extends LinearOpMode {
     //VARIABLES
     //////////////////////
     public NakulAuto auto;
-
     //////////////////////
     //METHODS
     //////////////////////
