@@ -1,28 +1,24 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.MainOpModes;
 
 // The hardware object is referenced
-import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.ftccommon.internal.manualcontrol.parameters.ImuParameters;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import java.lang.annotation.Target;
+import org.firstinspires.ftc.teamcode.Configuration.HardwareBot;
+import org.firstinspires.ftc.teamcode.Test.TestPIDController;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 @Autonomous(name = "NakulAuto", group = "")
 
@@ -39,19 +35,20 @@ public class NakulAuto extends LinearOpMode{
     }
 
     HardwareBot robot = new HardwareBot();
-    private ElapsedTime runtime;
+    public ElapsedTime runtime;
 
-    private Orientation previousAngles = new Orientation();
-    private double currentAngle = 0.0;
-    private Side side;
+    public Orientation previousAngles = new Orientation();
+    public double currentAngle = 0.0;
+    public Side side;
 
+    public OpenCvWebcam camera;
+    public CameraPipeline boxLocator;
 
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry){
-        this.hardwareMap = hardwareMap;
-        this.telemetry = telemetry;
+    public NakulAuto(){
+        super();
     }
 
     //////////////////////
@@ -65,15 +62,16 @@ public class NakulAuto extends LinearOpMode{
 
         // Initialize Robot and Positions
         robot.init(hardwareMap);
+        initCamera();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         waitForStart();
 
+        goToSpike();
         //timer.reset();
-        sleep(3000);
-        movePIDTest();
+        sleep(5000);
 
         //////////////////////
         // AUTONOMOUS BASED ON POSITION
@@ -105,9 +103,9 @@ public class NakulAuto extends LinearOpMode{
         // MAIN AUTONOMOUS
         //////////////////////
         else {
-            goToTarget(115, 0.5);
-            goToTarget(-8, -0.2);
-            sleep(3000);
+            //goToTarget(115, 0.5);
+            //goToTarget(-8, -0.2);
+            //sleep(3000);
             //turnPID(90);
         }
 
@@ -130,7 +128,7 @@ public class NakulAuto extends LinearOpMode{
 
         double targetAngle = 90;
         double targetDistance = robot.distanceToTicks(20);
-        PIDController test = new PIDController(0.01, 0, 0.003);
+        TestPIDController test = new TestPIDController(0.01, 0, 0.003);
 
         double error = targetDistance - robot.frontLeft.getCurrentPosition();
         //double error = angleWrap(targetAngle - robot.imu.getAngularOrientation().firstAngle);
@@ -160,6 +158,50 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //METHODS
     //////////////////////
+
+    // Creates and starts the camera
+    public void initCamera(){
+        // Gets the camera object
+        WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+        boxLocator = new CameraPipeline(telemetry);
+
+        camera.setPipeline(boxLocator);
+
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            // Sets the Camera Resolution and Orientation
+            public void onOpened() {
+                camera.startStreaming(320, 240 , OpenCvCameraRotation.UPRIGHT);
+            }
+            // Reports error
+            @Override
+            public void onError(int errorCode) {
+                telemetry.addData("Camera Init Error", errorCode);
+                telemetry.update();
+
+            }
+        });
+        // Displays on FTC Dashboard
+        FtcDashboard.getInstance().startCameraStream(camera, 0);
+    }
+
+    // Gets the position of the object on the spike
+    // and places the pixel onto that spike
+    public void goToSpike(){
+        CameraPipeline.Position position = boxLocator.getPos();
+        // Goes to the target spike mark, then returns to origin
+        if(position == CameraPipeline.Position.CENTER){
+            goToTarget(5, 0.5);
+        }
+        else if(position == CameraPipeline.Position.LEFT){
+            goToTarget(5, 0.5);
+        }
+        else if(position == CameraPipeline.Position.RIGHT){
+            goToTarget(5, 0.5);
+        }
+    }
 
     // Moves the robot to the desired target destination
     public void goToTarget(double centimeters, double power){

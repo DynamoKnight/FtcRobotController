@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.MainOpModes;
 
 
 import com.acmerobotics.dashboard.config.Config;
@@ -13,12 +13,12 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class NakulPipeline extends OpenCvPipeline {
+public class CameraPipeline extends OpenCvPipeline {
 
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulPipeline(Telemetry telemetry){
+    public CameraPipeline(Telemetry telemetry){
         this.telemetry = telemetry;
     }
 
@@ -29,7 +29,7 @@ public class NakulPipeline extends OpenCvPipeline {
     // Used for Configuration in FTC Dashboard
     public static boolean returnInput = true;
     // Represents the different positions of the object
-    enum Position {
+    public enum Position {
         LEFT,
         CENTER,
         RIGHT
@@ -81,6 +81,7 @@ public class NakulPipeline extends OpenCvPipeline {
     //////////////////////
 
     // Shows what the camera is seeing
+    // Searches for an object based on it's color
     @Override
     public Mat processFrame(Mat input){
         Mat tempMat = input;

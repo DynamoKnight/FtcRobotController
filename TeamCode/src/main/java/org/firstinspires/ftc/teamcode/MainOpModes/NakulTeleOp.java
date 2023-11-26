@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.MainOpModes;
 
 // The hardware object is referenced
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.Configuration.HardwareBot;
 
 //@Disabled
 @TeleOp(name = "TeleOp", group = "")
@@ -25,7 +27,7 @@ public class NakulTeleOp extends LinearOpMode {
         int ticks = 0;
 
         robot.init(hardwareMap);
-        auto = new NakulAuto(hardwareMap, telemetry);
+        auto = new NakulAuto();
 
         // Claw rests at back
         robot.claw.setPosition(0.15);

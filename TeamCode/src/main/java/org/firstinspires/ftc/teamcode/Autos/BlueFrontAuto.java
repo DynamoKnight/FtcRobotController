@@ -2,29 +2,33 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 // The hardware object is referenced
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.NakulAuto.Side;
 
-import org.firstinspires.ftc.teamcode.NakulAuto;
+import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto.Side;
+
+import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 
 //@Disabled
 @Autonomous(name = "BlueFrontAuto", group = "")
 //@TeleOp
 
-public class BlueFrontAuto extends LinearOpMode {
+public class BlueFrontAuto extends NakulAuto {
     //////////////////////
     //VARIABLES
     //////////////////////
-    public NakulAuto auto;
+
+    //////////////////////
+    //CONSTRUCTOR
+    //////////////////////
+    public BlueFrontAuto(){
+        super();
+    }
 
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto(hardwareMap, telemetry);
-        auto.runOpMode(Side.BLUE_FRONT);
+        super.runOpMode(Side.BLUE_FRONT);
     }
 }

@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Test;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class PIDController{
+public class TestPIDController {
     //////////////////////
     //VARIABLES
     //////////////////////
@@ -18,7 +17,7 @@ public class PIDController{
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public PIDController(double kP, double kI, double kD){
+    public TestPIDController(double kP, double kI, double kD){
         this.kP = kP;
         this.kI = kI;
         this.kD = kD;
