@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Test;
 
 
 import com.acmerobotics.dashboard.config.Config;
@@ -13,12 +13,12 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class NakulPipeline extends OpenCvPipeline {
+public class LocateArtifact extends OpenCvPipeline {
 
     //////////////////////////////
     // Properties
     //////////////////////////////
-    public final enum Pos = {LEFT, CENTER, RIGHT};
+    public static enum Pos{LEFT, CENTER, RIGHT};
     public static final Rect B1 = new Rect(30,120,30,30);
     public static final Rect B2 = new Rect(145,120,30,30);
     public static final Rect B3 = new Rect(260,120,30,30);
@@ -39,7 +39,7 @@ public class NakulPipeline extends OpenCvPipeline {
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulPipeline(Telemetry telemetry){
+    public LocateArtifact(Telemetry telemetry){
         this.telemetry = telemetry;
         this.pos = Pos.CENTER;
         this.color = new Mat();

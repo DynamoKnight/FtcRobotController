@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.Objects;
+
 class Main {
     public static void main(String[] args) {
         Stage   map       = new Stage();

@@ -1,4 +1,6 @@
-public class Motor extends Equipment{
+package org.firstinspires.ftc.teamcode.Objects;
+
+public class Equipment {
 
     //////////////////////////////
     // PROPERTIES
@@ -8,20 +10,23 @@ public class Motor extends Equipment{
     ///////////////////////////////
     // CONSTRUCTOR(S)
     ///////////////////////////////
-    Motor(){
-        super();
+    public Equipment() {
+
+    }
+
+    public Equipment(Robot robot) {
+        this.robot = robot;
     }
 
     ////////////////////////////////
     // METHODS
     ////////////////////////////////
 
-    public void doXDrive(int s){
-        System.out.println("...driving in X " + this + " on " + getRobot());
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 
-    public void doYDrive(int s){
-        System.out.println("...driving in Y:" + this + " on " + getRobot() );
+    public Robot getRobot(){
+        return this.robot;
     }
-
 }

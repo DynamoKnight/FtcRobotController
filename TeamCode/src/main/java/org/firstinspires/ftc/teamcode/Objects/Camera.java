@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.Objects;
+
 public class Camera extends Equipment {
     //////////////////////////////
     // PROPERTIES

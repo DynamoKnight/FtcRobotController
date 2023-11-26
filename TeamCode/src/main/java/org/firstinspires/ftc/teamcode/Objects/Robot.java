@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.Objects;
+
 public class Robot extends Thing{
 
     //////////////////////////////

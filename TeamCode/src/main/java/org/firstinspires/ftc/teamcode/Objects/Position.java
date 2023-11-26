@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.Objects;
+
 public class Position {
     //////////////////////////////
     // PROPERTIES
