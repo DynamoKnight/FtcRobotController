@@ -49,9 +49,8 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry){
-        this.hardwareMap = hardwareMap;
-        this.telemetry = telemetry;
+    public NakulAuto(){
+
     }
 
     //////////////////////
