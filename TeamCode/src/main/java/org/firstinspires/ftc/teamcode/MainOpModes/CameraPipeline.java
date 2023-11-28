@@ -14,14 +14,6 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
 public class CameraPipeline extends OpenCvPipeline {
-
-    //////////////////////
-    //CONSTRUCTOR
-    //////////////////////
-    public CameraPipeline(Telemetry telemetry){
-        this.telemetry = telemetry;
-    }
-
     //////////////////////
     //VARIABLES
     //////////////////////
@@ -76,6 +68,31 @@ public class CameraPipeline extends OpenCvPipeline {
     public static int upperB = 255;
     */
 
+    //////////////////////
+    //CONSTRUCTOR
+    //////////////////////
+    public CameraPipeline(Telemetry telemetry, NakulAuto.Side side){
+        this.telemetry = telemetry;
+        // Sets the color to find based on starting side color
+        if (side == NakulAuto.Side.RED_FRONT || side == NakulAuto.Side.RED_BACK){
+            int lowerR = 110;
+            int lowerG = 0;
+            int lowerB = 0;
+
+            int upperR = 255;
+            int upperG = 90;
+            int upperB = 255;
+        }
+        else {
+            int lowerR = 0;
+            int lowerG = 0;
+            int lowerB = 65;
+
+            int upperR = 70;
+            int upperG = 255;
+            int upperB = 255;
+        }
+    }
     //////////////////////
     //METHODS
     //////////////////////

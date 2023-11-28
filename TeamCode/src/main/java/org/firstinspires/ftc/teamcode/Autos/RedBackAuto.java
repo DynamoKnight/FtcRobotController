@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto.Side;
 import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 
 //@Disabled
-@Autonomous(name = "RedBackAuto", group = "")
+@Autonomous(name = "RedBackAuto", group = "Positions")
 //@TeleOp
 
 public class RedBackAuto extends LinearOpMode {

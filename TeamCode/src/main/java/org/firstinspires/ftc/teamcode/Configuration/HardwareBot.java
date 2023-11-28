@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.Configuration;
 
+import android.transition.Slide;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -56,6 +58,8 @@ public class HardwareBot {
     public Orientation angles;
     public double encoder_resolution;
     public double mc_diameter;
+    public DcMotor slide;
+    public Servo thingy;
 
     public ElapsedTime period = new ElapsedTime();
 
@@ -77,6 +81,8 @@ public class HardwareBot {
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
         claw = hardwareMap.get(Servo.class, Config.CLAW);
+        slide = hardwareMap.get(DcMotor.class, Config.SLIDE);
+        thingy = hardwareMap.get(Servo.class, Config.THINGY);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -84,6 +90,7 @@ public class HardwareBot {
 
         setMotorPower(0);
 
+        // The drive motors don't use motors
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -113,12 +120,11 @@ public class HardwareBot {
         //RevHubOrientationOnRobot.LogoFacingDirection.RIGHT
         //RevHubOrientationOnRobot.UsbFacingDirection.UP
 
-        // Climber Motor
-        /*climber.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        climber.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        climber.setTargetPosition(0);
-        climber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        */
+        // Slide Motor
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide.setTargetPosition(0);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         encoder_resolution = Config.ENCODER_RESOLUTION;
         mc_diameter = Config.MECANUM_WHEEL_DIAMETER;

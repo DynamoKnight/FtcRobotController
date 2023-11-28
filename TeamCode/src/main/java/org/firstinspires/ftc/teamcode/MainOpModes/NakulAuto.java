@@ -20,21 +20,21 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous(name = "NakulAuto", group = "")
+@Autonomous(name = "NakulAuto")
 
 public class NakulAuto extends LinearOpMode{
     //////////////////////
     //VARIABLES
     //////////////////////
     // An enum is a group of constants.
-    public static enum Side{
+    public enum Side{
         BLUE_FRONT,
         BLUE_BACK,
         RED_FRONT,
         RED_BACK
     }
 
-    HardwareBot robot = new HardwareBot();
+    public HardwareBot robot = new HardwareBot();
     public ElapsedTime runtime;
 
     public Orientation previousAngles = new Orientation();
@@ -62,13 +62,14 @@ public class NakulAuto extends LinearOpMode{
 
         // Initialize Robot and Positions
         robot.init(hardwareMap);
-        initCamera();
+        initCamera(side);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         waitForStart();
 
+        sleep(2000);
         goToSpike();
         //timer.reset();
         sleep(5000);
@@ -84,23 +85,21 @@ public class NakulAuto extends LinearOpMode{
             sleep(3000);
             turnPID(90);
             //goToTarget(183, 0.8);
-            return;
         }
         // BLUE Team Wall Side
         else if(side == Side.BLUE_BACK){
             turnPID(90);
-            return;
         }
         // RED Team Audience Side
         else if(side == Side.RED_FRONT){
-            return;
+            turnPID(90);
         }
         // RED Team Wall Side
         else if(side == Side.RED_BACK){
-            return;
+            turnPID(90);
         }
         //////////////////////
-        // MAIN AUTONOMOUS
+        // DEFAULT AUTONOMOUS
         //////////////////////
         else {
             //goToTarget(115, 0.5);
@@ -160,12 +159,12 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
 
     // Creates and starts the camera
-    public void initCamera(){
+    public void initCamera(Side side){
         // Gets the camera object
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
-        boxLocator = new CameraPipeline(telemetry);
+        boxLocator = new CameraPipeline(telemetry, side);
 
         camera.setPipeline(boxLocator);
 
@@ -193,14 +192,24 @@ public class NakulAuto extends LinearOpMode{
         CameraPipeline.Position position = boxLocator.getPos();
         // Goes to the target spike mark, then returns to origin
         if(position == CameraPipeline.Position.CENTER){
+            telemetry.addData("Object Location", "Center");
             goToTarget(5, 0.5);
+            sleep(3000);
+            goToTarget(-5, 0.5);
         }
         else if(position == CameraPipeline.Position.LEFT){
+            telemetry.addData("Object Location", "LEFT");
             goToTarget(5, 0.5);
+            sleep(3000);
+            goToTarget(-5, 0.5);
         }
         else if(position == CameraPipeline.Position.RIGHT){
+            telemetry.addData("Object Location", "RIGHT");
             goToTarget(5, 0.5);
+            sleep(3000);
+            goToTarget(-5, 0.5);
         }
+        telemetry.update();
     }
 
     // Moves the robot to the desired target destination

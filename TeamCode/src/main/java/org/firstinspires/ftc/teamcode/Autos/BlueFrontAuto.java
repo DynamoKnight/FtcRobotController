@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto.Side;
 import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 
 //@Disabled
-@Autonomous(name = "BlueFrontAuto", group = "")
+@Autonomous(name = "BlueFrontAuto", group = "Positions")
 //@TeleOp
 
 public class BlueFrontAuto extends NakulAuto {

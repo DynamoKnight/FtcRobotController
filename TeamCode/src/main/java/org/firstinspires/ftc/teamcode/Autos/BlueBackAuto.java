@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 
 //@Disabled
-@Autonomous(name = "BlueBackAuto", group = "")
+@Autonomous(name = "BlueBackAuto", group = "Positions")
 //@TeleOp
 
-public class BlueBackAuto extends NakulAuto {
+public class BlueBackAuto extends NakulAuto{
     //////////////////////
     //VARIABLES
     //////////////////////
