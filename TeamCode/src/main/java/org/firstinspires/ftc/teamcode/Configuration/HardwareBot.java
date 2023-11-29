@@ -81,8 +81,8 @@ public class HardwareBot {
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
         claw = hardwareMap.get(Servo.class, Config.CLAW);
-        slide = hardwareMap.get(DcMotor.class, Config.SLIDE);
-        thingy = hardwareMap.get(Servo.class, Config.THINGY);
+        //slide = hardwareMap.get(DcMotor.class, Config.SLIDE);
+        //thingy = hardwareMap.get(Servo.class, Config.THINGY);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -121,10 +121,10 @@ public class HardwareBot {
         //RevHubOrientationOnRobot.UsbFacingDirection.UP
 
         // Slide Motor
-        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        /*slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide.setTargetPosition(0);
-        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
         encoder_resolution = Config.ENCODER_RESOLUTION;
         mc_diameter = Config.MECANUM_WHEEL_DIAMETER;

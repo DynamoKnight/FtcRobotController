@@ -4,8 +4,6 @@ package org.firstinspires.ftc.teamcode.Autos;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto.Side;
-
 import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 
 //@Disabled
@@ -17,13 +15,12 @@ public class RedBackAuto extends LinearOpMode {
     //VARIABLES
     //////////////////////
     public NakulAuto auto;
-
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto();
-        auto.runOpMode(Side.RED_BACK);
+        auto = new NakulAuto(hardwareMap, telemetry);
+        auto.runOpMode(NakulAuto.Side.RED_BACK);
     }
 }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 // The hardware object is referenced
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 // Imports the enum so it can be accessed
 
 import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
@@ -10,23 +11,17 @@ import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 @Autonomous(name = "BlueBackAuto", group = "Positions")
 //@TeleOp
 
-public class BlueBackAuto extends NakulAuto{
+public class BlueBackAuto extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-
-    //////////////////////
-    //CONSTRUCTOR
-    //////////////////////
-    public BlueBackAuto(){
-        super();
-    }
-
+    NakulAuto auto;
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        super.runOpMode(Side.BLUE_BACK);
+        auto = new NakulAuto(hardwareMap, telemetry);
+        auto.runOpMode(NakulAuto.Side.BLUE_BACK);
     }
 }

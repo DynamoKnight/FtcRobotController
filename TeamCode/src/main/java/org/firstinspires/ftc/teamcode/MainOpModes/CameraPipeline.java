@@ -30,9 +30,9 @@ public class CameraPipeline extends OpenCvPipeline {
     // A Matrix stores image data
     Mat color = new Mat();
     // Rectangles
-    public static Rect box1 = new Rect(30,120,30,30);
-    public static Rect box2 = new Rect(145,120,30,30);
-    public static Rect box3 = new Rect(260,120,30,30);
+    public static Rect box1 = new Rect(20,130,40,40);
+    public static Rect box2 = new Rect(140,110,40,40);
+    public static Rect box3 = new Rect(265,130,40,40);
 
     // Sets the lower-bound and upper-bound RGB Range to search
     // Needs to be tuned to get best search

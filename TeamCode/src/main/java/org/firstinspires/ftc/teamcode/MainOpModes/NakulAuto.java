@@ -6,8 +6,10 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -47,8 +49,11 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public NakulAuto(){
-        super();
+    public NakulAuto(){}
+
+    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry){
+        this.hardwareMap = hardwareMap;
+        this.telemetry = telemetry;
     }
 
     //////////////////////
@@ -69,8 +74,14 @@ public class NakulAuto extends LinearOpMode{
 
         waitForStart();
 
+        telemetry.addData("Status", "Ready");
+        telemetry.update();
+
         sleep(2000);
         goToSpike();
+
+        telemetry.addData("Status", "Spike Reached");
+        telemetry.update();
         //timer.reset();
         sleep(5000);
 
@@ -96,7 +107,7 @@ public class NakulAuto extends LinearOpMode{
         }
         // RED Team Wall Side
         else if(side == Side.RED_BACK){
-            turnPID(90);
+            turnPID(-90);
         }
         //////////////////////
         // DEFAULT AUTONOMOUS
@@ -114,6 +125,7 @@ public class NakulAuto extends LinearOpMode{
         this.side = side;
         runOpMode();
     }
+
     //////////////////////
     //TESTING METHODS
     //////////////////////
@@ -190,6 +202,7 @@ public class NakulAuto extends LinearOpMode{
     // and places the pixel onto that spike
     public void goToSpike(){
         CameraPipeline.Position position = boxLocator.getPos();
+        telemetry.addData("Position", position);
         // Goes to the target spike mark, then returns to origin
         if(position == CameraPipeline.Position.CENTER){
             telemetry.addData("Object Location", "Center");

@@ -12,23 +12,17 @@ import org.firstinspires.ftc.teamcode.MainOpModes.NakulAuto;
 @Autonomous(name = "BlueFrontAuto", group = "Positions")
 //@TeleOp
 
-public class BlueFrontAuto extends NakulAuto {
+public class BlueFrontAuto extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-
-    //////////////////////
-    //CONSTRUCTOR
-    //////////////////////
-    public BlueFrontAuto(){
-        super();
-    }
-
+    NakulAuto auto;
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        super.runOpMode(Side.BLUE_FRONT);
+        auto = new NakulAuto(hardwareMap, telemetry);
+        auto.runOpMode(NakulAuto.Side.BLUE_FRONT);
     }
 }
