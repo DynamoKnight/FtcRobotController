@@ -20,7 +20,8 @@ public class RedFrontAuto extends LinearOpMode {
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto(hardwareMap, telemetry);
-        auto.runOpMode(NakulAuto.Side.RED_FRONT);
+        auto = new NakulAuto(hardwareMap, telemetry, NakulAuto.Side.RED_FRONT);
+        waitForStart();
+        auto.runOpMode();
     }
 }

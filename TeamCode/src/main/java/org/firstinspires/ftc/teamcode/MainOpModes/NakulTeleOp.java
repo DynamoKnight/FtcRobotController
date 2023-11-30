@@ -27,7 +27,6 @@ public class NakulTeleOp extends LinearOpMode {
         int ticks = 0;
 
         robot.init(hardwareMap);
-        auto = new NakulAuto();
 
         // Claw rests at back
         robot.claw.setPosition(0.15);
@@ -109,17 +108,20 @@ public class NakulTeleOp extends LinearOpMode {
 
             // Moves linear slide up and opens servo
             if (gamepad1.right_bumper) {
-                if(robot.slide != null & robot.thingy != null) {
+                if(robot.slide_left != null & robot.slide_right != null & robot.thingy != null) {
                     ticks += 50;
-                    robot.slide.setTargetPosition(ticks);
-                    robot.slide.setPower(0.8);
+                    robot.slide_left.setTargetPosition(ticks);
+                    robot.slide_left.setPower(0.8);
+                    robot.slide_right.setTargetPosition(ticks);
+                    robot.slide_right.setPower(0.8);
                     robot.thingy.setPosition(1);
                 }
             }
             // Linear slide stops
             else{
-                if(robot.slide != null & robot.thingy != null) {
-                    robot.slide.setPower(0);
+                if(robot.slide_left != null & robot.slide_right != null & robot.thingy != null) {
+                    robot.slide_left.setPower(0);
+                    robot.slide_right.setPower(0);
                     robot.thingy.setPosition(0);
                 }
             }

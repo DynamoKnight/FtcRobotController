@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.MainOpModes;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,6 +23,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
+import java.util.function.BooleanSupplier;
+@Disabled
 @Autonomous(name = "NakulAuto")
 
 public class NakulAuto extends LinearOpMode{
@@ -51,9 +54,21 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     public NakulAuto(){}
 
-    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry){
+    // When an OpMode is started, it's variables and methods are the only
+    // working ones. Other classes must use it's variables and methods.
+    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry, Side side) throws InterruptedException{
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
+        this.side = side;
+
+        this.telemetry.addData("Status", "Initialized at " + side);
+        this.telemetry.update();
+
+        initCamera(this.side);
+    }
+
+    public NakulAuto(LinearOpMode auto){
+
     }
 
     //////////////////////
@@ -62,23 +77,23 @@ public class NakulAuto extends LinearOpMode{
     // This method must be implemented. It is overridden to do the stuff we want.
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 1;
-        int ticks = 0;
-
         // Initialize Robot and Positions
         robot.init(hardwareMap);
-        initCamera(side);
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
-        waitForStart();
+        sleep(2000);
 
         telemetry.addData("Status", "Ready");
         telemetry.update();
 
-        sleep(2000);
-        goToSpike();
+        // Gets the current position of the object
+        CameraPipeline.Position pos = boxLocator.getPos();
+        // Ends the camera stream
+        camera.closeCameraDeviceAsync(() -> {
+            telemetry.addData("Object Position", pos);
+            telemetry.update();
+        });
+
+        goToSpike(pos);
 
         telemetry.addData("Status", "Spike Reached");
         telemetry.update();
@@ -99,6 +114,7 @@ public class NakulAuto extends LinearOpMode{
         }
         // BLUE Team Wall Side
         else if(side == Side.BLUE_BACK){
+            goToTarget(15, 0.5);
             turnPID(90);
         }
         // RED Team Audience Side
@@ -113,17 +129,14 @@ public class NakulAuto extends LinearOpMode{
         // DEFAULT AUTONOMOUS
         //////////////////////
         else {
-            //goToTarget(115, 0.5);
-            //goToTarget(-8, -0.2);
-            //sleep(3000);
-            //turnPID(90);
+            telemetry.addData("Status", "SAD");
+            telemetry.update();
+            goToTarget(115, 0.5);
+            goToTarget(-8, -0.2);
+            sleep(3000);
+            turnPID(90);
         }
 
-    }
-    // Takes an enum to determine the starting position
-    public void runOpMode(Side side) throws InterruptedException {
-        this.side = side;
-        runOpMode();
     }
 
     //////////////////////
@@ -200,25 +213,33 @@ public class NakulAuto extends LinearOpMode{
 
     // Gets the position of the object on the spike
     // and places the pixel onto that spike
-    public void goToSpike(){
-        CameraPipeline.Position position = boxLocator.getPos();
+    public void goToSpike(CameraPipeline.Position position){
         telemetry.addData("Position", position);
         // Goes to the target spike mark, then returns to origin
+        // CENTER SPIKE MARK
         if(position == CameraPipeline.Position.CENTER){
             telemetry.addData("Object Location", "Center");
-            goToTarget(5, 0.5);
+            goToTarget(20, 0.5);
             sleep(3000);
             goToTarget(-5, 0.5);
         }
+        // LEFT SPIKE MARK
         else if(position == CameraPipeline.Position.LEFT){
             telemetry.addData("Object Location", "LEFT");
-            goToTarget(5, 0.5);
+            robot.frontRight.setPower(0.5);
+            sleep(1000);
+            robot.frontRight.setPower(0);
+            goToTarget(20, 0.5);
             sleep(3000);
             goToTarget(-5, 0.5);
         }
+        // RIGHT SPIKE MARK
         else if(position == CameraPipeline.Position.RIGHT){
             telemetry.addData("Object Location", "RIGHT");
-            goToTarget(5, 0.5);
+            robot.frontLeft.setPower(0.5);
+            sleep(1000);
+            robot.frontLeft.setPower(0);
+            goToTarget(20, 0.5);
             sleep(3000);
             goToTarget(-5, 0.5);
         }
@@ -227,7 +248,6 @@ public class NakulAuto extends LinearOpMode{
 
     // Moves the robot to the desired target destination
     public void goToTarget(double centimeters, double power){
-
         // Allows ticks and position to be tracked
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -255,7 +275,7 @@ public class NakulAuto extends LinearOpMode{
         robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Checks to see if the target destination is reached
-        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
+        while(robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
             telemetry.addData("Front_Left Position: ", robot.frontLeft.getCurrentPosition());
             telemetry.update();
         }

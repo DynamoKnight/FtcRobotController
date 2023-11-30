@@ -20,7 +20,8 @@ public class RedBackAuto extends LinearOpMode {
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto(hardwareMap, telemetry);
-        auto.runOpMode(NakulAuto.Side.RED_BACK);
+        auto = new NakulAuto(hardwareMap, telemetry, NakulAuto.Side.RED_BACK);
+        waitForStart();
+        auto.runOpMode();
     }
 }

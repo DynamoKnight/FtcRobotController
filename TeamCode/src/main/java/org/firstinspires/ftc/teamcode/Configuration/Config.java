@@ -38,7 +38,8 @@ public class Config {
     public static volatile double DRIVE_TURN_SENSITIVITY = 1;
 
     // Elevator
-    public static volatile String SLIDE = "slide";
+    public static volatile String SLIDE_LEFT = "slide_left";
+    public static volatile String SLIDE_RIGHT = "slide_right";
     public static volatile String THINGY = "slide_servo";
 
     // Claw

@@ -15,13 +15,15 @@ public class BlueBackAuto extends LinearOpMode {
     //////////////////////
     //VARIABLES
     //////////////////////
-    NakulAuto auto;
+    public NakulAuto auto;
     //////////////////////
     //METHODS
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto(hardwareMap, telemetry);
-        auto.runOpMode(NakulAuto.Side.BLUE_BACK);
+        //auto = new NakulAuto(new BlueBackAuto());
+        auto = new NakulAuto(hardwareMap, telemetry, NakulAuto.Side.BLUE_BACK);
+        waitForStart();
+        auto.runOpMode();
     }
 }

@@ -74,23 +74,25 @@ public class CameraPipeline extends OpenCvPipeline {
     public CameraPipeline(Telemetry telemetry, NakulAuto.Side side){
         this.telemetry = telemetry;
         // Sets the color to find based on starting side color
+        // RED
         if (side == NakulAuto.Side.RED_FRONT || side == NakulAuto.Side.RED_BACK){
-            int lowerR = 110;
-            int lowerG = 0;
-            int lowerB = 0;
+            lowerR = 110;
+            lowerG = 0;
+            lowerB = 0;
 
-            int upperR = 255;
-            int upperG = 90;
-            int upperB = 255;
+            upperR = 255;
+            upperG = 90;
+            upperB = 255;
         }
+        // BLUE
         else {
-            int lowerR = 0;
-            int lowerG = 0;
-            int lowerB = 65;
+            lowerR = 0;
+            lowerG = 0;
+            lowerB = 65;
 
-            int upperR = 70;
-            int upperG = 255;
-            int upperB = 255;
+            upperR = 70;
+            upperG = 255;
+            upperB = 255;
         }
     }
     //////////////////////
@@ -115,7 +117,7 @@ public class CameraPipeline extends OpenCvPipeline {
         // rgb - 012
 
         /*
-        // Creates a greyscale channel
+        // Creates a greyscale channel based on black & white
         Mat grey = new Mat();
         Imgproc.cvtColor(input, grey, Imgproc.COLOR_RGB2GRAY);
         Core.extractChannel(grey, color, 0);
