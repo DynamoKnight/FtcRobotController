@@ -89,13 +89,13 @@ public class NakulTeleOp extends LinearOpMode {
             // Close Claw
             if (gamepad1.a) {
                 if (robot.claw != null) {
-                    robot.claw.setPosition(1);
+                    robot.claw.setPosition(0);
                 }
             }
             // Open Claw
             if (gamepad1.x) {
                 if (robot.claw != null) {
-                    robot.claw.setPosition(0.5);
+                    robot.claw.setPosition(0.6);
                 }
             }
 
@@ -108,21 +108,21 @@ public class NakulTeleOp extends LinearOpMode {
 
             // Moves linear slide up and opens servo
             if (gamepad1.right_bumper) {
-                if(robot.slide_left != null & robot.slide_right != null & robot.thingy != null) {
+                if(robot.slide_left != null & robot.slide_right != null & robot.auto_claw != null) {
                     ticks += 50;
                     robot.slide_left.setTargetPosition(ticks);
                     robot.slide_left.setPower(0.8);
                     robot.slide_right.setTargetPosition(ticks);
                     robot.slide_right.setPower(0.8);
-                    robot.thingy.setPosition(1);
+                    robot.auto_claw.setPosition(1);
                 }
             }
             // Linear slide stops
             else{
-                if(robot.slide_left != null & robot.slide_right != null & robot.thingy != null) {
+                if(robot.slide_left != null & robot.slide_right != null & robot.auto_claw != null) {
                     robot.slide_left.setPower(0);
                     robot.slide_right.setPower(0);
-                    robot.thingy.setPosition(0);
+                    robot.auto_claw.setPosition(0);
                 }
             }
 

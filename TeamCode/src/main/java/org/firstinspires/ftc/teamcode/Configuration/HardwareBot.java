@@ -60,7 +60,7 @@ public class HardwareBot {
     public double mc_diameter;
     public DcMotor slide_left;
     public DcMotor slide_right;
-    public Servo thingy;
+    public Servo auto_claw;
 
     public ElapsedTime period = new ElapsedTime();
 
@@ -84,7 +84,7 @@ public class HardwareBot {
         claw = hardwareMap.get(Servo.class, Config.CLAW);
         //slide_left = hardwareMap.get(DcMotor.class, Config.SLIDE_LEFT);
         //slide_right = hardwareMap.get(DcMotor.class, Config.SLIDE_RIGHT);
-        //thingy = hardwareMap.get(Servo.class, Config.THINGY);
+        //auto_claw = hardwareMap.get(Servo.class, Config.THINGY);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);

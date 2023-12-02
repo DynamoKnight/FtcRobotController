@@ -45,6 +45,7 @@ public class NakulAuto extends LinearOpMode{
     public Orientation previousAngles = new Orientation();
     public double currentAngle = 0.0;
     public Side side;
+    public double speed = 0.25;
 
     public OpenCvWebcam camera;
     public CameraPipeline boxLocator;
@@ -60,6 +61,7 @@ public class NakulAuto extends LinearOpMode{
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
         this.side = side;
+        speed = 0.25;
 
         this.telemetry.addData("Status", "Initialized at " + side);
         this.telemetry.update();
@@ -79,6 +81,7 @@ public class NakulAuto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         // Initialize Robot and Positions
         robot.init(hardwareMap);
+        robot.claw.setPosition(0);
 
         sleep(2000);
 
@@ -98,7 +101,7 @@ public class NakulAuto extends LinearOpMode{
         telemetry.addData("Status", "Spike Reached");
         telemetry.update();
         //timer.reset();
-        sleep(5000);
+        sleep(2000);
 
         //////////////////////
         // AUTONOMOUS BASED ON POSITION
@@ -106,24 +109,21 @@ public class NakulAuto extends LinearOpMode{
         // Runs the different paths for each starting position
         // BLUE Team Audience Side
         if(side == Side.BLUE_FRONT){
-            goToTarget(115, 0.5);
-            goToTarget(-8, -0.2);
-            sleep(3000);
-            turnPID(90);
+            //goToTarget(-160, 0.2, true);
             //goToTarget(183, 0.8);
         }
         // BLUE Team Wall Side
         else if(side == Side.BLUE_BACK){
-            goToTarget(15, 0.5);
-            turnPID(90);
+            //goToTarget(15, 0.5, false);
+            //turnPID(90);
         }
         // RED Team Audience Side
         else if(side == Side.RED_FRONT){
-            turnPID(90);
+            //turnPID(90);
         }
         // RED Team Wall Side
         else if(side == Side.RED_BACK){
-            turnPID(-90);
+            //turnPID(-90);
         }
         //////////////////////
         // DEFAULT AUTONOMOUS
@@ -131,52 +131,12 @@ public class NakulAuto extends LinearOpMode{
         else {
             telemetry.addData("Status", "SAD");
             telemetry.update();
-            goToTarget(115, 0.5);
-            goToTarget(-8, -0.2);
+            goToTarget(115, 0.5, false);
+            goToTarget(-8, -0.2, false);
             sleep(3000);
             turnPID(90);
         }
 
-    }
-
-    //////////////////////
-    //TESTING METHODS
-    //////////////////////
-
-    // Tests the robot with PID
-    public void movePIDTest(){
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        double targetAngle = 90;
-        double targetDistance = robot.distanceToTicks(20);
-        TestPIDController test = new TestPIDController(0.01, 0, 0.003);
-
-        double error = targetDistance - robot.frontLeft.getCurrentPosition();
-        //double error = angleWrap(targetAngle - robot.imu.getAngularOrientation().firstAngle);
-
-        // Stop when error is within 2 cm or 2 deg
-        while (opModeIsActive() && Math.abs(error) > 2){
-            double power = test.PIDControl(error);
-            //double power = test.PIDControl(error);
-            robot.setMotorPower(power);
-        }
-        robot.setMotorPower(0);
-
-
-    }
-
-    // Tests the IMU and PID Control System
-    public void gyroTest(){
-        // Sets the target for the robot to travel
-        goToTarget(100, 0.5);
-        // Sleepy time...
-        sleep(3000);
-
-        turnPID(90);
-        sleep(2000);
     }
 
     //////////////////////
@@ -219,35 +179,161 @@ public class NakulAuto extends LinearOpMode{
         // CENTER SPIKE MARK
         if(position == CameraPipeline.Position.CENTER){
             telemetry.addData("Object Location", "Center");
-            goToTarget(20, 0.5);
-            sleep(3000);
-            goToTarget(-5, 0.5);
+
+            goToTarget(100, speed, false);
+            sleep(1000);
+            goToTarget(-35, speed, false);
+            sleep(1000);
+            robot.claw.setPosition(0.6);
+            sleep(2000);
+            goToTarget(-5, speed, false);
+            robot.claw.setPosition(0);
+
+            if (side == Side.BLUE_BACK){
+                goToTarget(-60, speed, false);
+                sleep(1000);
+                goToTarget(-100, speed, true);
+
+                turnToPID(-90);
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
+            else if (side == Side.RED_BACK){
+                goToTarget(-60, speed, false);
+                sleep(1000);
+                goToTarget(100, speed, true);
+
+                turnToPID(90);
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
         }
         // LEFT SPIKE MARK
         else if(position == CameraPipeline.Position.LEFT){
             telemetry.addData("Object Location", "LEFT");
-            robot.frontRight.setPower(0.5);
-            sleep(1000);
-            robot.frontRight.setPower(0);
-            goToTarget(20, 0.5);
-            sleep(3000);
-            goToTarget(-5, 0.5);
+
+            if (side == Side.BLUE_FRONT) {
+                goToTarget(45, speed, false);
+                sleep(1000);
+                turnToPID(45);
+                goToTarget(5, speed, false);
+                robot.claw.setPosition(0.6);
+                sleep(2000);
+                goToTarget(-20, speed, false);
+                robot.claw.setPosition(0);
+            }
+            else if (side == Side.BLUE_BACK){
+                goToTarget(-20, speed, true);
+                sleep(1000);
+                goToTarget(33, speed, false);
+                sleep(1000);
+                robot.claw.setPosition(0.6);
+                sleep(1000);
+                goToTarget(-30, speed, false);
+                robot.claw.setPosition(0);
+                goToTarget(-60, speed, true);
+
+                turnToPID(-90);
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
+            else if (side == Side.RED_FRONT) {
+                goToTarget(-20, speed, true);
+                sleep(1000);
+                goToTarget(33, speed, false);
+                sleep(1000);
+                robot.claw.setPosition(0.6);
+                sleep(1000);
+                goToTarget(-5, speed, false);
+                robot.claw.setPosition(0);
+            }
+            else if (side == Side.RED_BACK){
+                goToTarget(45, speed, false);
+                sleep(1000);
+                turnToPID(45);
+                goToTarget(5, speed, false);
+                robot.claw.setPosition(0.6);
+                sleep(2000);
+                goToTarget(-20, speed, false);
+                robot.claw.setPosition(0);
+                sleep(1000);
+                turnToPID(80);
+                sleep(1000);
+                goToTarget(-70, speed, false);
+
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
         }
         // RIGHT SPIKE MARK
         else if(position == CameraPipeline.Position.RIGHT){
             telemetry.addData("Object Location", "RIGHT");
-            robot.frontLeft.setPower(0.5);
-            sleep(1000);
-            robot.frontLeft.setPower(0);
-            goToTarget(20, 0.5);
-            sleep(3000);
-            goToTarget(-5, 0.5);
+
+            if (side == Side.BLUE_FRONT) {
+                goToTarget(27, speed, true);
+                sleep(1000);
+                goToTarget(33, speed, false);
+                sleep(1000);
+                robot.claw.setPosition(0.6);
+                sleep(1000);
+                goToTarget(-5, speed, false);
+                robot.claw.setPosition(0);
+            }
+            else if (side == Side.BLUE_BACK){
+                goToTarget(40, speed, false);
+                sleep(1000);
+                turnToPID(-55);
+                goToTarget(5, speed, false);
+                robot.claw.setPosition(0.6);
+                sleep(2000);
+                goToTarget(-20, speed, false);
+                robot.claw.setPosition(0);
+                sleep(1000);
+                turnToPID(-80);
+                sleep(1000);
+                goToTarget(-70, speed, false);
+
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
+            else if (side == Side.RED_FRONT) {
+                goToTarget(40, speed, false);
+                sleep(1000);
+                turnToPID(-55);
+                goToTarget(5, speed, false);
+                robot.claw.setPosition(0.6);
+                sleep(2000);
+                goToTarget(-20, speed, false);
+                robot.claw.setPosition(0);
+            }
+            else if (side == Side.RED_BACK){
+                goToTarget(28, speed, true);
+                sleep(1000);
+                goToTarget(33, speed, false);
+                sleep(1000);
+                robot.claw.setPosition(0.6);
+                sleep(1000);
+                goToTarget(-30, speed, false);
+                robot.claw.setPosition(0);
+                goToTarget(60, speed, true);
+
+                turnToPID(90);
+                robot.climber.setPower(1);
+                sleep(4000);
+                robot.climber.setPower(0);
+            }
+
         }
         telemetry.update();
     }
 
     // Moves the robot to the desired target destination
-    public void goToTarget(double centimeters, double power){
+    public void goToTarget(double centimeters, double power, boolean strafe){
         // Allows ticks and position to be tracked
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -262,10 +348,19 @@ public class NakulAuto extends LinearOpMode{
         // The target position in units of ticks
         double targetTicks = robot.frontLeft.getCurrentPosition() + robot.distanceToTicks(centimeters);
 
-        robot.frontRight.setTargetPosition(robot.distanceToTicks(centimeters));
-        robot.frontLeft.setTargetPosition(robot.distanceToTicks(centimeters));
-        robot.backRight.setTargetPosition(robot.distanceToTicks(centimeters));
-        robot.backLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+        // Allows strafe
+        if (strafe) {
+            robot.frontRight.setTargetPosition(-robot.distanceToTicks(centimeters));
+            robot.frontLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+            robot.backRight.setTargetPosition(robot.distanceToTicks(centimeters));
+            robot.backLeft.setTargetPosition(-robot.distanceToTicks(centimeters));
+        }
+        else{
+            robot.frontRight.setTargetPosition(robot.distanceToTicks(centimeters));
+            robot.frontLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+            robot.backRight.setTargetPosition(robot.distanceToTicks(centimeters));
+            robot.backLeft.setTargetPosition(robot.distanceToTicks(centimeters));
+        }
 
         robot.setMotorPower(power);
 
@@ -323,7 +418,7 @@ public class NakulAuto extends LinearOpMode{
         // How far away the robot is from the target angle
         double error = degrees;
         // Keeps turning until within +- 2 degrees of target
-        while (opModeIsActive() && Math.abs(error) > 2){
+        while (Math.abs(error) > 2){
             // If the error is in the negative direction, go -0.3 power
             double motorPower = (error < 0 ? -0.3 : 0.3);
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
@@ -368,7 +463,7 @@ public class NakulAuto extends LinearOpMode{
         // 50 milliseconds for each update
         telemetry.setMsTransmissionInterval(50);
         // Keeps turning until the robot is within ±1 degree of the target
-        while (opModeIsActive() && Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
+        while (Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
             double motorPower = pid.update(getAbsoluteAngle());
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
 
@@ -397,6 +492,46 @@ public class NakulAuto extends LinearOpMode{
             degrees += 360;
         }
         return degrees;
+    }
+
+    //////////////////////
+    //TESTING METHODS
+    //////////////////////
+
+    // Tests the robot with PID
+    public void movePIDTest(){
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        double targetAngle = 90;
+        double targetDistance = robot.distanceToTicks(20);
+        TestPIDController test = new TestPIDController(0.01, 0, 0.003);
+
+        double error = targetDistance - robot.frontLeft.getCurrentPosition();
+        //double error = angleWrap(targetAngle - robot.imu.getAngularOrientation().firstAngle);
+
+        // Stop when error is within 2 cm or 2 deg
+        while (opModeIsActive() && Math.abs(error) > 2){
+            double power = test.PIDControl(error);
+            //double power = test.PIDControl(error);
+            robot.setMotorPower(power);
+        }
+        robot.setMotorPower(0);
+
+
+    }
+
+    // Tests the IMU and PID Control System
+    public void gyroTest(){
+        // Sets the target for the robot to travel
+        goToTarget(100, 0.5, false);
+        // Sleepy time...
+        sleep(3000);
+
+        turnPID(90);
+        sleep(2000);
     }
 }
 

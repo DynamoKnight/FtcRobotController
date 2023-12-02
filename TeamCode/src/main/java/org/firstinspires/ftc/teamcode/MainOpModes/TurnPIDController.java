@@ -71,6 +71,9 @@ public class TurnPIDController {
         // The first part makes sure it goes in the direction of the error
         // motorPower is within ±1
         double motorPower = 0.1 * Math.signum(error) + 0.9 * Math.tanh(kP * error + kI * accumulatedError - kD * slope);
+        if (motorPower > 0.5){
+            motorPower = 0.5;
+        }
         return motorPower;
 
     }

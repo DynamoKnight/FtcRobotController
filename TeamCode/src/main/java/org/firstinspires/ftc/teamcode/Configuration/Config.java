@@ -40,7 +40,7 @@ public class Config {
     // Elevator
     public static volatile String SLIDE_LEFT = "slide_left";
     public static volatile String SLIDE_RIGHT = "slide_right";
-    public static volatile String THINGY = "slide_servo";
+    public static volatile String AUTO_CLAW = "slide_servo";
 
     // Claw
     public static volatile String CLAW = "claw_servo";
