@@ -82,6 +82,7 @@ public class HardwareBot {
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
         claw = hardwareMap.get(Servo.class, Config.CLAW);
+        drone = hardwareMap.get(Servo.class, Config.DRONE);
         //slide_left = hardwareMap.get(DcMotor.class, Config.SLIDE_LEFT);
         //slide_right = hardwareMap.get(DcMotor.class, Config.SLIDE_RIGHT);
         //auto_claw = hardwareMap.get(Servo.class, Config.THINGY);

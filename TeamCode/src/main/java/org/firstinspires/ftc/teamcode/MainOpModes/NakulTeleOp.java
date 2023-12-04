@@ -64,7 +64,7 @@ public class NakulTeleOp extends LinearOpMode {
             }
             // Regular Speed
             else{
-                speed = 0.2;
+                speed = 0.4;
             }
 
             // Climber moves up
@@ -87,7 +87,7 @@ public class NakulTeleOp extends LinearOpMode {
             }
 
             // Close Claw
-            if (gamepad1.a) {
+            /*if (gamepad1.a) {
                 if (robot.claw != null) {
                     robot.claw.setPosition(0);
                 }
@@ -97,7 +97,7 @@ public class NakulTeleOp extends LinearOpMode {
                 if (robot.claw != null) {
                     robot.claw.setPosition(0.6);
                 }
-            }
+            }*/
 
             // Launch Drone
             if(gamepad1.right_trigger > 0.5){
