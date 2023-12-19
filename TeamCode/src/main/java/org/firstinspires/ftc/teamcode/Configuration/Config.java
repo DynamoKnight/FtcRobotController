@@ -47,6 +47,11 @@ public class Config {
 
     public static volatile String CLAW_ROTATION = "claw_rotation_servo";
 
+    // Grabber
+    public static volatile String GRABBER = "grabber_servo";
+    public static volatile String GRAB_LEFT = "grab_servo_left";
+    public static volatile String GRAB_RIGHT = "grab_servo_right";
+
     // Climber
     public static volatile String CLIMBER = "climber";
 

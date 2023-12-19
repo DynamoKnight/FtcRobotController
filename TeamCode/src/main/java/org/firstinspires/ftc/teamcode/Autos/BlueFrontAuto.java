@@ -22,8 +22,7 @@ public class BlueFrontAuto extends LinearOpMode {
     //////////////////////
     @Override
     public void runOpMode() throws InterruptedException {
-        auto = new NakulAuto(hardwareMap, telemetry, NakulAuto.Side.BLUE_FRONT);
-        waitForStart();
+        auto = new NakulAuto(this, NakulAuto.Side.BLUE_FRONT);
         auto.runOpMode();
     }
 }

@@ -50,27 +50,19 @@ public class NakulAuto extends LinearOpMode{
     public OpenCvWebcam camera;
     public CameraPipeline boxLocator;
 
+    public LinearOpMode auto;
+
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
     public NakulAuto(){}
 
-    // When an OpMode is started, it's variables and methods are the only
-    // working ones. Other classes must use it's variables and methods.
-    public NakulAuto(HardwareMap hardwareMap, Telemetry telemetry, Side side) throws InterruptedException{
-        this.hardwareMap = hardwareMap;
-        this.telemetry = telemetry;
+    public NakulAuto(LinearOpMode auto, Side side){
+        // auto is a specific reference to "this"
+        this.auto = auto;
+        this.hardwareMap = auto.hardwareMap;
+        this.telemetry = auto.telemetry;
         this.side = side;
-        speed = 0.25;
-
-        this.telemetry.addData("Status", "Initialized at " + side);
-        this.telemetry.update();
-
-        initCamera(this.side);
-    }
-
-    public NakulAuto(LinearOpMode auto){
-
     }
 
     //////////////////////
@@ -80,8 +72,15 @@ public class NakulAuto extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize Robot and Positions
+        initCamera(this.side);
         robot.init(hardwareMap);
         robot.claw.setPosition(0);
+        robot.grabber.setPosition(0.8);
+
+        this.telemetry.addData("Status", "Initialized at " + side);
+        this.telemetry.update();
+
+        auto.waitForStart();
 
         sleep(2000);
 
@@ -109,33 +108,23 @@ public class NakulAuto extends LinearOpMode{
         // Runs the different paths for each starting position
         // BLUE Team Audience Side
         if(side == Side.BLUE_FRONT){
-            //goToTarget(-160, 0.2, true);
-            //goToTarget(183, 0.8);
+
         }
         // BLUE Team Wall Side
         else if(side == Side.BLUE_BACK){
-            //goToTarget(15, 0.5, false);
-            //turnPID(90);
+
         }
         // RED Team Audience Side
         else if(side == Side.RED_FRONT){
-            //turnPID(90);
+
         }
         // RED Team Wall Side
         else if(side == Side.RED_BACK){
-            //turnPID(-90);
+
         }
-        //////////////////////
-        // DEFAULT AUTONOMOUS
-        //////////////////////
-        else {
-            telemetry.addData("Status", "SAD");
-            telemetry.update();
-            goToTarget(115, 0.5, false);
-            goToTarget(-8, -0.2, false);
-            sleep(3000);
-            turnPID(90);
-        }
+
+        telemetry.addData("Status", "Finished Auto");
+        telemetry.update();
 
     }
 
@@ -370,7 +359,7 @@ public class NakulAuto extends LinearOpMode{
         robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Checks to see if the target destination is reached
-        while(robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
+        while(auto.opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
             telemetry.addData("Front_Left Position: ", robot.frontLeft.getCurrentPosition());
             telemetry.update();
         }
@@ -418,7 +407,7 @@ public class NakulAuto extends LinearOpMode{
         // How far away the robot is from the target angle
         double error = degrees;
         // Keeps turning until within +- 2 degrees of target
-        while (Math.abs(error) > 2){
+        while (auto.opModeIsActive() && Math.abs(error) > 2){
             // If the error is in the negative direction, go -0.3 power
             double motorPower = (error < 0 ? -0.3 : 0.3);
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
@@ -463,7 +452,7 @@ public class NakulAuto extends LinearOpMode{
         // 50 milliseconds for each update
         telemetry.setMsTransmissionInterval(50);
         // Keeps turning until the robot is within ±1 degree of the target
-        while (Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
+        while (auto.opModeIsActive() && Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
             double motorPower = pid.update(getAbsoluteAngle());
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
 

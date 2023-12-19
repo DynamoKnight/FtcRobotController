@@ -53,15 +53,18 @@ public class HardwareBot {
     public DcMotor backRight;
     public DcMotor climber;
     public Servo claw;
+    public Servo grabber;
+    public Servo grab_left;
+    public Servo grab_right;
     public Servo drone;
     public BNO055IMU imu;
-    public Orientation angles;
-    public double encoder_resolution;
-    public double mc_diameter;
     public DcMotor slide_left;
     public DcMotor slide_right;
     public Servo auto_claw;
 
+    public Orientation angles;
+    public double encoder_resolution;
+    public double mc_diameter;
     public ElapsedTime period = new ElapsedTime();
 
     //////////////////////
@@ -82,10 +85,8 @@ public class HardwareBot {
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
         claw = hardwareMap.get(Servo.class, Config.CLAW);
+        grabber = hardwareMap.get(Servo.class, Config.GRABBER);
         drone = hardwareMap.get(Servo.class, Config.DRONE);
-        //slide_left = hardwareMap.get(DcMotor.class, Config.SLIDE_LEFT);
-        //slide_right = hardwareMap.get(DcMotor.class, Config.SLIDE_RIGHT);
-        //auto_claw = hardwareMap.get(Servo.class, Config.THINGY);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);

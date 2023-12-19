@@ -25,11 +25,17 @@ public class NakulTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double speed = 1;
         int ticks = 0;
+        // Grabber toggle variables
+        double[] grab_pos = {0.6, 0.4, 0.2};
+        int cur_idx = 0;
+        int dir = 1;
+        boolean isHeld = false;
 
         robot.init(hardwareMap);
 
         // Claw rests at back
         robot.claw.setPosition(0.15);
+        robot.grabber.setPosition(0.8);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -86,18 +92,32 @@ public class NakulTeleOp extends LinearOpMode {
                 }
             }
 
-            // Close Claw
+            // When Start + A is pressed, this runs
             /*if (gamepad1.a) {
-                if (robot.claw != null) {
-                    robot.claw.setPosition(0);
-                }
-            }
-            // Open Claw
-            if (gamepad1.x) {
-                if (robot.claw != null) {
-                    robot.claw.setPosition(0.6);
+                if (robot.grabber != null) {
+                    robot.grabber.setPosition(0);
                 }
             }*/
+
+            // Toggle Grabber position
+            // isHeld ensures that the position doesn't change
+            // while the button is being held
+            if (gamepad1.x & !isHeld) {
+                if (robot.grabber != null) {
+                    robot.grabber.setPosition(grab_pos[cur_idx]);
+                    if ((cur_idx + dir) > grab_pos.length - 1){
+                        dir = -1;
+                    }
+                    else if ((cur_idx + dir) < 0){
+                        dir = 1;
+                    }
+                    cur_idx += dir;
+                }
+                isHeld = true;
+            }
+            if (!gamepad1.x){
+                isHeld = false;
+            }
 
             // Launch Drone
             if(gamepad1.right_trigger > 0.5){
@@ -129,16 +149,7 @@ public class NakulTeleOp extends LinearOpMode {
             //////////////////////
             //GAMEPAD 2
             //////////////////////
-            // Prevents stick drift
-            if (gamepad2.right_stick_x < 0.1 && gamepad2.right_stick_x > -0.1){
-                gamepad2.right_stick_x = 0;
-            }
-            if (gamepad2.left_stick_y < 0.1 && gamepad2.left_stick_y > -0.1){
-                gamepad2.left_stick_y = 0;
-            }
-            if (gamepad2.left_stick_x < 0.1 && gamepad2.left_stick_x > -0.1){
-                gamepad2.left_stick_x = 0;
-            }
+            // Nothing
 
             telemetry.addData("Status", "Running: Nakul is" + speed + "% EPIC!");
             telemetry.update();
