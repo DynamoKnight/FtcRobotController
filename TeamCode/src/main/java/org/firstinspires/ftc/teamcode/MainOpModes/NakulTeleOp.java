@@ -29,13 +29,17 @@ public class NakulTeleOp extends LinearOpMode {
         double[] grab_pos = {0.6, 0.4, 0.2};
         int cur_idx = 0;
         int dir = 1;
-        boolean isHeld = false;
+        boolean grabIsHeld = false;
+        boolean lGrabIsHeld = false;
+        boolean rGrabIsHeld = false;
 
         robot.init(hardwareMap);
 
         // Claw rests at back
         robot.claw.setPosition(0.15);
         robot.grabber.setPosition(0.8);
+        robot.grab_right.setPosition(0);
+        robot.grab_left.setPosition(0);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -94,15 +98,12 @@ public class NakulTeleOp extends LinearOpMode {
 
             // When Start + A is pressed, this runs
             /*if (gamepad1.a) {
-                if (robot.grabber != null) {
-                    robot.grabber.setPosition(0);
-                }
             }*/
 
             // Toggle Grabber position
             // isHeld ensures that the position doesn't change
             // while the button is being held
-            if (gamepad1.x & !isHeld) {
+            if (gamepad1.x & !grabIsHeld) {
                 if (robot.grabber != null) {
                     robot.grabber.setPosition(grab_pos[cur_idx]);
                     if ((cur_idx + dir) > grab_pos.length - 1){
@@ -113,10 +114,39 @@ public class NakulTeleOp extends LinearOpMode {
                     }
                     cur_idx += dir;
                 }
-                isHeld = true;
+                grabIsHeld = true;
             }
+            // Indicates that it isn't held
             if (!gamepad1.x){
-                isHeld = false;
+                grabIsHeld = false;
+            }
+            // Toggles Left Grabber
+            if (gamepad1.y & !lGrabIsHeld){
+                if (robot.grab_left != null){
+                    if ((robot.grab_left.getPosition() == 0)) {
+                        robot.grab_left.setPosition(0.5);
+                    } else {
+                        robot.grab_left.setPosition(0);
+                    }
+                }
+                lGrabIsHeld = true;
+            }
+            if (!gamepad1.y){
+                lGrabIsHeld = false;
+            }
+            // Toggles Right Grabber
+            if (gamepad1.b & !rGrabIsHeld){
+                if (robot.grab_right != null){
+                    if ((robot.grab_right.getPosition() == 0)) {
+                        robot.grab_right.setPosition(0.5);
+                    } else {
+                        robot.grab_right.setPosition(0);
+                    }
+                }
+                rGrabIsHeld = true;
+            }
+            if (!gamepad1.b){
+                rGrabIsHeld = false;
             }
 
             // Launch Drone

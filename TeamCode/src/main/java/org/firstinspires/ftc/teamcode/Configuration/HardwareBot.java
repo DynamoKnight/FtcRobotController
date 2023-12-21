@@ -154,7 +154,11 @@ public class HardwareBot {
         period.reset();
     }
 
-    // Converts the target distance to ticks
+    /**
+     * Converts the target distance to ticks.
+     * @param centimeters is the displacement needed to travel.
+     * @return the number of ticks that the wheels have to move
+     */
     public int distanceToTicks(double centimeters){
         // Circumference = Diameter * pi
         // Revolutions = Distance / Circumference

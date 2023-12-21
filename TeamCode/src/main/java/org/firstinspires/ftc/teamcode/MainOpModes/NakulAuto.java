@@ -321,7 +321,12 @@ public class NakulAuto extends LinearOpMode{
         telemetry.update();
     }
 
-    // Moves the robot to the desired target destination
+    /**
+     * Moves the robot to the desired target destination
+     * @param centimeters is the displacement needed to travel.
+     * @param power is the desired speed.
+     * @param strafe indicates whether the robot is moving longitudinal or lateral
+    **/
     public void goToTarget(double centimeters, double power, boolean strafe){
         // Allows ticks and position to be tracked
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -373,7 +378,9 @@ public class NakulAuto extends LinearOpMode{
         robot.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    // Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
+    /**
+     * Resets the angle of the robot. Does not change the absolute angle, but the relative angle.
+     */
     public void resetAngle(){
         previousAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         currentAngle = 0.0;
