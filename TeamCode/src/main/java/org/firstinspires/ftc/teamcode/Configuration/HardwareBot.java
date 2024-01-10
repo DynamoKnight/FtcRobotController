@@ -84,9 +84,10 @@ public class HardwareBot {
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
         climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
-        claw = hardwareMap.get(Servo.class, Config.CLAW);
         grabber = hardwareMap.get(Servo.class, Config.GRABBER);
         drone = hardwareMap.get(Servo.class, Config.DRONE);
+        grab_left = hardwareMap.get(Servo.class, Config.GRAB_LEFT);
+        grab_right = hardwareMap.get(Servo.class, Config.GRAB_RIGHT);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);

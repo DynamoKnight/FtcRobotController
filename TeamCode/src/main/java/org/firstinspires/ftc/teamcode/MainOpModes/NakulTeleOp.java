@@ -26,7 +26,7 @@ public class NakulTeleOp extends LinearOpMode {
         double speed = 1;
         int ticks = 0;
         // Grabber toggle variables
-        double[] grab_pos = {0.6, 0.4, 0.2};
+        double[] grab_pos = {0.6, 0.4, 0.25};
         int cur_idx = 0;
         int dir = 1;
         boolean grabIsHeld = false;
@@ -35,11 +35,10 @@ public class NakulTeleOp extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        // Claw rests at back
-        robot.claw.setPosition(0.15);
-        robot.grabber.setPosition(0.8);
-        robot.grab_right.setPosition(0);
-        robot.grab_left.setPosition(0);
+        // 1500 is 0.5, 2200 is 1
+        robot.grabber.setPosition(0.5);
+        robot.grab_right.setPosition(0.4);
+        robot.grab_left.setPosition(0.45);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -103,7 +102,7 @@ public class NakulTeleOp extends LinearOpMode {
             // Toggle Grabber position
             // isHeld ensures that the position doesn't change
             // while the button is being held
-            if (gamepad1.x & !grabIsHeld) {
+            if (gamepad1.y & !grabIsHeld) {
                 if (robot.grabber != null) {
                     robot.grabber.setPosition(grab_pos[cur_idx]);
                     if ((cur_idx + dir) > grab_pos.length - 1){
@@ -117,30 +116,30 @@ public class NakulTeleOp extends LinearOpMode {
                 grabIsHeld = true;
             }
             // Indicates that it isn't held
-            if (!gamepad1.x){
+            if (!gamepad1.y){
                 grabIsHeld = false;
             }
             // Toggles Left Grabber
-            if (gamepad1.y & !lGrabIsHeld){
+            if (gamepad1.x & !lGrabIsHeld){
                 if (robot.grab_left != null){
-                    if ((robot.grab_left.getPosition() == 0)) {
-                        robot.grab_left.setPosition(0.5);
+                    if ((robot.grab_left.getPosition() == 0.35)) {
+                        robot.grab_left.setPosition(0.55);
                     } else {
-                        robot.grab_left.setPosition(0);
+                        robot.grab_left.setPosition(0.35);
                     }
                 }
                 lGrabIsHeld = true;
             }
-            if (!gamepad1.y){
+            if (!gamepad1.x){
                 lGrabIsHeld = false;
             }
             // Toggles Right Grabber
             if (gamepad1.b & !rGrabIsHeld){
                 if (robot.grab_right != null){
-                    if ((robot.grab_right.getPosition() == 0)) {
-                        robot.grab_right.setPosition(0.5);
+                    if ((robot.grab_right.getPosition() == 0.52)) {
+                        robot.grab_right.setPosition(0.4);
                     } else {
-                        robot.grab_right.setPosition(0);
+                        robot.grab_right.setPosition(0.52);
                     }
                 }
                 rGrabIsHeld = true;
