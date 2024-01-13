@@ -285,12 +285,28 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(25, speed, false);
             }
             else if (side == Side.RED_FRONT) {
-                goToTarget(-20, speed, true);
+                goToTarget(22, speed, true);
                 sleep(1000);
                 goToTarget(33, speed, false);
                 sleep(1000);
+                robot.grab_left.setPosition(0.35);
                 sleep(1000);
-                goToTarget(-5, speed, false);
+                robot.climber.setPower(1);
+                sleep(250);
+                robot.climber.setPower(0);
+                goToTarget(40,speed,false);
+                turnTo(-85);
+                goToTarget(150,speed,false);
+                robot.grabber.setPosition(0.4);
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
+                goToTarget(50,speed,true);
+                goToTarget(45,speed,false);
+                robot.grab_right.setPosition(0.55);
+                goToTarget(-10,speed,false);
+                goToTarget(-60,speed,true);
+                goToTarget(25,speed,false);
             }
             else if (side == Side.RED_BACK){
                 goToTarget(45, speed, false);
@@ -314,12 +330,29 @@ public class NakulAuto extends LinearOpMode{
             telemetry.addData("Object Location", "RIGHT");
 
             if (side == Side.BLUE_FRONT) {
-                goToTarget(27, speed, true);
+                goToTarget(22, speed, true);
                 sleep(1000);
                 goToTarget(33, speed, false);
                 sleep(1000);
+                robot.grab_left.setPosition(0.35);
                 sleep(1000);
-                goToTarget(-5, speed, false);
+                robot.climber.setPower(1);
+                sleep(250);
+                robot.climber.setPower(0);
+                goToTarget(40,speed,false);
+                turnTo(85);
+                goToTarget(150,speed,false);
+                robot.grabber.setPosition(0.4);
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
+                goToTarget(-50,speed,true);
+                goToTarget(45,speed,false);
+                robot.grab_right.setPosition(0.55);
+                goToTarget(-10,speed,false);
+                goToTarget(60,speed,true);
+                goToTarget(25,speed,false);
+
             }
             else if (side == Side.BLUE_BACK){
                 goToTarget(40, speed, false);
