@@ -75,13 +75,13 @@ public class NakulAuto extends LinearOpMode{
         initCamera(this.side);
         robot.init(hardwareMap);
         robot.grab_left.setPosition(0.35);
-        robot.grab_right.setPosition(0.7);
+        robot.grab_right.setPosition(0.68);
 
         this.telemetry.addData("Status", "Initialized at " + side);
         this.telemetry.update();
 
         auto.waitForStart();
-        robot.grabber.setPosition(.525);
+        robot.grabber.setPosition(0.525);
         sleep(500);
 
         telemetry.addData("Status", "Ready");
@@ -171,7 +171,7 @@ public class NakulAuto extends LinearOpMode{
 
             goToTarget(55, speed, false);
             sleep(1000);
-            robot.grab_left.setPosition(0.52);
+            robot.grab_left.setPosition(0.55);
             goToTarget(-10, speed, false);
             sleep(1000);
 
@@ -188,7 +188,7 @@ public class NakulAuto extends LinearOpMode{
                 sleep(500);
                 goToTarget(42.5, speed, false);
                 sleep(1500);
-                robot.grab_right.setPosition(.35);
+                robot.grab_right.setPosition(0.55);
                 sleep(150);
                 goToTarget(-10, speed, false);
                 goToTarget(-65, speed, true);
@@ -207,7 +207,7 @@ public class NakulAuto extends LinearOpMode{
                 sleep(500);
                 goToTarget(42.5, speed, false);
                 sleep(1500);
-                robot.grab_right.setPosition(0.35);
+                robot.grab_right.setPosition(0.55);
                 sleep(150);
                 goToTarget(-10, speed, false);
                 goToTarget(70, speed, true);
@@ -226,7 +226,7 @@ public class NakulAuto extends LinearOpMode{
                 robot.grabber.setPosition(0.4);
                 goToTarget(-60, speed, true);
                 goToTarget(25, speed, false);
-                robot.grab_right.setPosition(0.35);
+                robot.grab_right.setPosition(0.55);
                 goToTarget(-10, speed, false);
                 goToTarget(30, speed, true);
                 goToTarget(25, speed, false);
@@ -244,7 +244,7 @@ public class NakulAuto extends LinearOpMode{
                 robot.grabber.setPosition(0.4);
                 goToTarget(60,speed,true);
                 goToTarget(25,speed,false);
-                robot.grab_right.setPosition(0.35);
+                robot.grab_right.setPosition(0.55);
                 goToTarget(-10,speed,false);
                 goToTarget(-30,speed,true);
                 goToTarget(25, speed, false);
@@ -278,7 +278,7 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(35, speed, true);
                 goToTarget(15, speed, false);
                 sleep(1500);
-                robot.grab_right.setPosition(0.35);
+                robot.grab_right.setPosition(0.55);
                 sleep(150);
                 goToTarget(-10, speed, false);
                 goToTarget(-45, speed, true);
@@ -289,7 +289,7 @@ public class NakulAuto extends LinearOpMode{
                 sleep(1000);
                 goToTarget(33, speed, false);
                 sleep(1000);
-                robot.grab_left.setPosition(0.35);
+                robot.grab_left.setPosition(0.55);
                 sleep(1000);
                 robot.climber.setPower(1);
                 sleep(250);
@@ -334,7 +334,7 @@ public class NakulAuto extends LinearOpMode{
                 sleep(1000);
                 goToTarget(33, speed, false);
                 sleep(1000);
-                robot.grab_left.setPosition(0.35);
+                robot.grab_left.setPosition(0.55);
                 sleep(1000);
                 robot.climber.setPower(1);
                 sleep(250);
@@ -391,13 +391,13 @@ public class NakulAuto extends LinearOpMode{
                 robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
                 goToTarget(40, speed, false);
-                goToTarget(-35, speed, true);
+                goToTarget(-32.5, speed, true);
                 goToTarget(15, speed, false);
                 sleep(1500);
-                robot.grab_right.setPosition(0.35);
-                sleep(150);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
                 goToTarget(-10, speed, false);
-                goToTarget(45, speed, true);
+                goToTarget(47.5, speed, true);
                 goToTarget(25, speed, false);
             }
 

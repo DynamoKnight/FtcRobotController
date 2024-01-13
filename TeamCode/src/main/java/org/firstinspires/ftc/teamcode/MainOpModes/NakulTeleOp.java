@@ -138,12 +138,12 @@ public class NakulTeleOp extends LinearOpMode {
             // Toggles Right Grabber
             if (gamepad1.right_bumper & !rGrabIsHeld){
                 if (robot.grab_right != null){
-                    if ((robot.grab_right.getPosition() == 0.7)) {
+                    if ((robot.grab_right.getPosition() == 0.68)) {
                         // Open
-                        robot.grab_right.setPosition(0.52);
+                        robot.grab_right.setPosition(0.55);
                     } else {
                         // Close
-                        robot.grab_right.setPosition(0.7);
+                        robot.grab_right.setPosition(0.68);
                     }
                 }
                 rGrabIsHeld = true;
