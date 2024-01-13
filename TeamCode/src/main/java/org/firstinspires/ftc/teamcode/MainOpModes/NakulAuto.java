@@ -166,7 +166,7 @@ public class NakulAuto extends LinearOpMode{
         telemetry.addData("Position", position);
         // Goes to the target spike mark, then returns to origin
         // CENTER SPIKE MARK
-        if(position == CameraPipeline.Position.CENTER){
+        if(position == CameraPipeline.Position.CENTER) {
             telemetry.addData("Object Location", "Center");
 
             goToTarget(55, speed, false);
@@ -175,17 +175,26 @@ public class NakulAuto extends LinearOpMode{
             goToTarget(-10, speed, false);
             sleep(1000);
 
-            if (side == Side.BLUE_BACK){
-                goToTarget(-60, speed, false);
-                sleep(1000);
-                goToTarget(-100, speed, true);
-
-                turnToPID(-90);
+            if (side == Side.BLUE_BACK) {
+                turnTo(85);
+                robot.grabber.setPosition(0.4);
                 robot.climber.setPower(1);
-                sleep(4000);
+                sleep(1000);
                 robot.climber.setPower(0);
+                sleep(500);
+                goToTarget(40, speed, false);
+                sleep(500);
+                goToTarget(30, speed, true);
+                sleep(500);
+                goToTarget(42.5, speed, false);
+                sleep(1500);
+                robot.grab_right.setPosition(.35);
+                sleep(150);
+                goToTarget(-10, speed, false);
+                goToTarget(-65, speed, true);
+                goToTarget(25, speed, false);
             }
-            else if (side == Side.RED_BACK){
+            else if (side == Side.RED_BACK) {
                 turnTo(-85);
                 robot.grabber.setPosition(0.4);
                 robot.climber.setPower(1);
@@ -202,6 +211,24 @@ public class NakulAuto extends LinearOpMode{
                 sleep(150);
                 goToTarget(-10, speed, false);
                 goToTarget(70, speed, true);
+                goToTarget(25, speed, false);
+            }
+            else if (side == Side.RED_FRONT){
+                robot.climber.setPower(1);
+                sleep(250);
+                robot.climber.setPower(0);
+                goToTarget(40, speed, false);
+                turnTo(-85);
+                goToTarget(150, speed, false);
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                goToTarget(-60, speed, true);
+                goToTarget(25, speed, false);
+                robot.grab_right.setPosition(0.35);
+                goToTarget(-10, speed, false);
+                goToTarget(30, speed, true);
                 goToTarget(25, speed, false);
             }
         }
