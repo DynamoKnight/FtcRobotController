@@ -188,12 +188,20 @@ public class NakulAuto extends LinearOpMode{
             else if (side == Side.RED_BACK){
                 turnToPID(-90);
                 robot.grabber.setPosition(0.4);
-                goToTarget(100, speed, false);
                 robot.climber.setPower(1);
                 sleep(1000);
                 robot.climber.setPower(0);
                 sleep(1000);
+                goToTarget(40, speed, false);
+                sleep(500);
+                goToTarget(-30, speed, true);
+                sleep(500);
+                goToTarget(42.5, speed, false);
+                sleep(1000);
                 robot.grab_right.setPosition(0.35);
+                sleep(1000);
+                goToTarget(-10, speed, false);
+
             }
         }
         // LEFT SPIKE MARK
