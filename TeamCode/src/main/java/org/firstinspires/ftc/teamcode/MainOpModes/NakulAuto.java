@@ -82,7 +82,7 @@ public class NakulAuto extends LinearOpMode{
 
         auto.waitForStart();
         robot.grabber.setPosition(.525);
-        sleep(2000);
+        sleep(500);
 
         telemetry.addData("Status", "Ready");
         telemetry.update();
@@ -186,22 +186,23 @@ public class NakulAuto extends LinearOpMode{
                 robot.climber.setPower(0);
             }
             else if (side == Side.RED_BACK){
-                turnToPID(-90);
+                turnTo(-85);
                 robot.grabber.setPosition(0.4);
                 robot.climber.setPower(1);
                 sleep(1000);
                 robot.climber.setPower(0);
-                sleep(1000);
+                sleep(500);
                 goToTarget(40, speed, false);
                 sleep(500);
                 goToTarget(-30, speed, true);
                 sleep(500);
                 goToTarget(42.5, speed, false);
-                sleep(1000);
+                sleep(1500);
                 robot.grab_right.setPosition(0.35);
-                sleep(1000);
+                sleep(150);
                 goToTarget(-10, speed, false);
-
+                goToTarget(70, speed, true);
+                goToTarget(25, speed, false);
             }
         }
         // LEFT SPIKE MARK
@@ -292,18 +293,26 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(-20, speed, false);
             }
             else if (side == Side.RED_BACK){
-                goToTarget(28, speed, true);
+                goToTarget(22, speed, true);
+                sleep(500);
+                goToTarget(30, speed, false);
                 sleep(1000);
-                goToTarget(33, speed, false);
-                sleep(1000);
-                sleep(1000);
-                goToTarget(-30, speed, false);
-                goToTarget(60, speed, true);
-
-                turnToPID(90);
+                robot.grab_left.setPosition(0.55);
+                goToTarget(-10, speed, false);
+                turnTo(-85);
                 robot.climber.setPower(1);
-                sleep(4000);
+                sleep(1000);
                 robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                goToTarget(40, speed, false);
+                goToTarget(-35, speed, true);
+                goToTarget(15, speed, false);
+                sleep(1500);
+                robot.grab_right.setPosition(0.35);
+                sleep(150);
+                goToTarget(-10, speed, false);
+                goToTarget(45, speed, true);
+                goToTarget(25, speed, false);
             }
 
         }

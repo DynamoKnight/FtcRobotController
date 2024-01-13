@@ -69,11 +69,11 @@ public class NakulTeleOp extends LinearOpMode {
 
             // Sprint button
             if (gamepad1.left_trigger > 0.5){
-                speed = 0.7;
+                speed = 0.8;
             }
             // Regular Speed
             else{
-                speed = 0.4;
+                speed = 0.5;
             }
 
             // Climber moves up
