@@ -231,6 +231,24 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(30, speed, true);
                 goToTarget(25, speed, false);
             }
+            else if (side == Side.BLUE_FRONT) {
+                robot.climber.setPower(1);
+                sleep(250);
+                robot.climber.setPower(0);
+                goToTarget(40,speed, false);
+                turnTo(85);
+                goToTarget(150,speed, false);
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                goToTarget(60,speed,true);
+                goToTarget(25,speed,false);
+                robot.grab_right.setPosition(0.35);
+                goToTarget(-10,speed,false);
+                goToTarget(-30,speed,true);
+                goToTarget(25, speed, false);
+            }
         }
         // LEFT SPIKE MARK
         else if(position == CameraPipeline.Position.LEFT){
