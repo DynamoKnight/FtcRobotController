@@ -165,104 +165,105 @@ public class NakulAuto extends LinearOpMode{
     public void goToSpike(CameraPipeline.Position position){
         telemetry.addData("Position", position);
         // Goes to the target spike mark, then returns to origin
+
         // CENTER SPIKE MARK
         if(position == CameraPipeline.Position.CENTER) {
             telemetry.addData("Object Location", "Center");
 
-            goToTarget(55, speed, false);
-            sleep(1000);
-            robot.grab_left.setPosition(0.55);
-            goToTarget(-10, speed, false);
-            sleep(1000);
-
             if (side == Side.BLUE_BACK) {
+                goToTarget(56, false);
+                sleep(1000);
+                robot.grab_left.setPosition(0.55);
+                goToTarget(-10, false);
                 turnTo(85);
                 robot.grabber.setPosition(0.4);
                 robot.climber.setPower(1);
                 sleep(1000);
                 robot.climber.setPower(0);
                 sleep(500);
-                goToTarget(40, speed, false);
+                goToTarget(40, false);
                 sleep(500);
-                goToTarget(30, speed, true);
+                goToTarget(30, true);
                 sleep(500);
-                goToTarget(42.5, speed, false);
+                goToTarget(42.5, false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
                 sleep(150);
-                goToTarget(-10, speed, false);
-                goToTarget(-65, speed, true);
-                goToTarget(25, speed, false);
-            }
-            else if (side == Side.RED_BACK) {
-                turnTo(-85);
-                robot.grabber.setPosition(0.4);
-                robot.climber.setPower(1);
-                sleep(1000);
-                robot.climber.setPower(0);
-                sleep(500);
-                goToTarget(40, speed, false);
-                sleep(500);
-                goToTarget(-30, speed, true);
-                sleep(500);
-                goToTarget(42.5, speed, false);
-                sleep(1500);
-                robot.grab_right.setPosition(0.55);
-                sleep(150);
-                goToTarget(-10, speed, false);
-                goToTarget(70, speed, true);
-                goToTarget(25, speed, false);
-            }
-            else if (side == Side.RED_FRONT){
-                robot.climber.setPower(1);
-                sleep(250);
-                robot.climber.setPower(0);
-                goToTarget(40, speed, false);
-                turnTo(-85);
-                goToTarget(150, speed, false);
-                robot.climber.setPower(1);
-                sleep(750);
-                robot.climber.setPower(0);
-                robot.grabber.setPosition(0.4);
-                goToTarget(-60, speed, true);
-                goToTarget(25, speed, false);
-                robot.grab_right.setPosition(0.55);
-                goToTarget(-10, speed, false);
-                goToTarget(30, speed, true);
-                goToTarget(25, speed, false);
+                goToTarget(-10, false);
+                goToTarget(-70, true);
+                goToTarget(25, false);
             }
             else if (side == Side.BLUE_FRONT) {
-                robot.climber.setPower(1);
-                sleep(250);
-                robot.climber.setPower(0);
-                goToTarget(40,speed, false);
-                turnTo(85);
-                goToTarget(150,speed, false);
-                robot.climber.setPower(1);
+                goToTarget(10, true);
+                goToTarget(55, false);
                 sleep(750);
+                robot.grab_left.setPosition(0.55);
+                robot.climber.setPower(1);
+                sleep(1000);
                 robot.climber.setPower(0);
+                goToTarget(70, false);
+                turnTo(85);
+                goToTarget(150, false);
                 robot.grabber.setPosition(0.4);
-                goToTarget(60,speed,true);
-                goToTarget(25,speed,false);
+                goToTarget(-67, true);
+                goToTarget(56, false);
+                sleep(1500);
                 robot.grab_right.setPosition(0.55);
-                goToTarget(-10,speed,false);
-                goToTarget(-30,speed,true);
-                goToTarget(25, speed, false);
+                sleep(250);
+                goToTarget(-10, false);
+                goToTarget(59, true);
+                goToTarget(27, false);
+            }
+            else if (side == Side.RED_BACK) {
+                goToTarget(56, false);
+                sleep(1000);
+                robot.grab_left.setPosition(0.55);
+                goToTarget(-10, false);
+                turnTo(-85);
+                robot.grabber.setPosition(0.4);
+                robot.climber.setPower(1);
+                sleep(1000);
+                robot.climber.setPower(0);
+                sleep(500);
+                goToTarget(40, false);
+                sleep(500);
+                goToTarget(-30, true);
+                sleep(500);
+                goToTarget(42.5, false);
+                sleep(1500);
+                robot.grab_right.setPosition(0.55);
+                sleep(150);
+                goToTarget(-10, false);
+                goToTarget(70, true);
+                goToTarget(25, false);
+            }
+            else if (side == Side.RED_FRONT){
+                goToTarget(-10, true);
+                goToTarget(55, false);
+                sleep(750);
+                robot.grab_left.setPosition(0.55);
+                robot.climber.setPower(1);
+                sleep(1000);
+                robot.climber.setPower(0);
+                goToTarget(70, false);
+                turnTo(-85);
+                goToTarget(150, false);
+                robot.grabber.setPosition(0.4);
+                goToTarget(67, true);
+                goToTarget(56, false);
+                sleep(1500);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                goToTarget(-59, true);
+                goToTarget(27, false);
             }
         }
         // LEFT SPIKE MARK
         else if(position == CameraPipeline.Position.LEFT){
             telemetry.addData("Object Location", "LEFT");
 
-            if (side == Side.BLUE_FRONT) {
-                goToTarget(45, speed, false);
-                sleep(1000);
-                turnToPID(45);
-                goToTarget(5, speed, false);
-                sleep(2000);
-                goToTarget(-20, speed, false);
-            }
-            else if (side == Side.BLUE_BACK){
+            if (side == Side.BLUE_BACK){
                 goToTarget(22, speed, true);
                 sleep(500);
                 goToTarget(30, speed, false);
@@ -279,104 +280,109 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(15, speed, false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
-                sleep(150);
+                sleep(250);
                 goToTarget(-10, speed, false);
                 goToTarget(-45, speed, true);
                 goToTarget(25, speed, false);
             }
-            else if (side == Side.RED_FRONT) {
-                goToTarget(22, speed, true);
+            else if (side == Side.BLUE_FRONT) {
+                goToTarget(29, speed, true);
                 sleep(1000);
-                goToTarget(33, speed, false);
-                sleep(1000);
+                goToTarget(40, speed, false);
                 robot.grab_left.setPosition(0.55);
+                sleep(500);
+                robot.climber.setPower(1);
                 sleep(1000);
-                robot.climber.setPower(1);
-                sleep(250);
                 robot.climber.setPower(0);
-                goToTarget(40,speed,false);
-                turnTo(-85);
-                goToTarget(150,speed,false);
+                goToTarget(75, speed,false);
+                turnTo(85);
+                goToTarget(203, speed,false);
                 robot.grabber.setPosition(0.4);
-                robot.climber.setPower(1);
-                sleep(750);
-                robot.climber.setPower(0);
-                goToTarget(50,speed,true);
-                goToTarget(45,speed,false);
+                goToTarget(-35, speed,true);
+                goToTarget(35, speed,false);
+                sleep(1500);
                 robot.grab_right.setPosition(0.55);
-                goToTarget(-10,speed,false);
-                goToTarget(-60,speed,true);
-                goToTarget(25,speed,false);
+                sleep(250);
+                goToTarget(-10, speed, false);
+                goToTarget(35, speed,true);
+                goToTarget(20, speed,false);
             }
             else if (side == Side.RED_BACK){
-                goToTarget(45, speed, false);
-                sleep(1000);
-                turnToPID(45);
-                goToTarget(5, speed, false);
-                sleep(2000);
-                goToTarget(-20, speed, false);
-                sleep(1000);
-                turnToPID(80);
-                sleep(1000);
-                goToTarget(-70, speed, false);
-
+                goToTarget(40, false);
+                turnTo(40);
+                goToTarget(10, false);
+                sleep(500);
+                robot.grab_left.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                turnTo(-87.5);
                 robot.climber.setPower(1);
-                sleep(4000);
+                sleep(1000);
                 robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                goToTarget(50, false);
+                goToTarget(-30, true);
+                goToTarget(25, false);
+                sleep(1000);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                goToTarget(70, true);
+                goToTarget(15, false);
+
             }
+            else if (side == Side.RED_FRONT) {
+                goToTarget(-29, speed, true);
+                sleep(1000);
+                goToTarget(40, speed, false);
+                robot.grab_left.setPosition(0.55);
+                sleep(500);
+                robot.climber.setPower(1);
+                sleep(1000);
+                robot.climber.setPower(0);
+                goToTarget(75, speed,false);
+                turnTo(-85);
+                goToTarget(203, speed,false);
+                robot.grabber.setPosition(0.4);
+                goToTarget(35, speed,true);
+                goToTarget(35, speed,false);
+                sleep(1500);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, speed, false);
+                goToTarget(-35, speed,true);
+                goToTarget(20, speed,false);
+            }
+
         }
         // RIGHT SPIKE MARK
         else if(position == CameraPipeline.Position.RIGHT){
             telemetry.addData("Object Location", "RIGHT");
 
-            if (side == Side.BLUE_FRONT) {
+            if (side == Side.BLUE_BACK){
+
+            }
+            else if (side == Side.BLUE_FRONT) {
                 goToTarget(22, speed, true);
                 sleep(1000);
                 goToTarget(33, speed, false);
                 sleep(1000);
                 robot.grab_left.setPosition(0.55);
-                sleep(1000);
+                sleep(500);
                 robot.climber.setPower(1);
-                sleep(250);
+                sleep(1000);
                 robot.climber.setPower(0);
-                goToTarget(40,speed,false);
+                goToTarget(40, speed,false);
                 turnTo(85);
-                goToTarget(150,speed,false);
+                goToTarget(150, speed,false);
                 robot.grabber.setPosition(0.4);
-                robot.climber.setPower(1);
-                sleep(750);
-                robot.climber.setPower(0);
-                goToTarget(-50,speed,true);
-                goToTarget(45,speed,false);
+                goToTarget(-50, speed,true);
+                goToTarget(45, speed,false);
                 robot.grab_right.setPosition(0.55);
-                goToTarget(-10,speed,false);
-                goToTarget(60,speed,true);
-                goToTarget(25,speed,false);
+                goToTarget(-10, speed,false);
+                goToTarget(60, speed,true);
+                goToTarget(25, speed,false);
 
-            }
-            else if (side == Side.BLUE_BACK){
-                goToTarget(40, speed, false);
-                sleep(1000);
-                turnToPID(-55);
-                goToTarget(5, speed, false);
-                sleep(2000);
-                goToTarget(-20, speed, false);
-                sleep(1000);
-                turnToPID(-80);
-                sleep(1000);
-                goToTarget(-70, speed, false);
-
-                robot.climber.setPower(1);
-                sleep(4000);
-                robot.climber.setPower(0);
-            }
-            else if (side == Side.RED_FRONT) {
-                goToTarget(40, speed, false);
-                sleep(1000);
-                turnToPID(-55);
-                goToTarget(5, speed, false);
-                sleep(2000);
-                goToTarget(-20, speed, false);
             }
             else if (side == Side.RED_BACK){
                 goToTarget(22, speed, true);
@@ -384,6 +390,7 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(30, speed, false);
                 sleep(1000);
                 robot.grab_left.setPosition(0.55);
+                sleep(250);
                 goToTarget(-10, speed, false);
                 turnTo(-85);
                 robot.climber.setPower(1);
@@ -400,9 +407,21 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(47.5, speed, true);
                 goToTarget(25, speed, false);
             }
+            else if (side == Side.RED_FRONT) {
+
+            }
 
         }
         telemetry.update();
+    }
+
+    /**
+     * Different signature with default power value
+     * @param centimeters is the displacement needed to travel.
+     * @param strafe is the desired speed.
+     */
+    public void goToTarget(double centimeters, boolean strafe){
+        goToTarget(centimeters, speed, strafe);
     }
 
     /**

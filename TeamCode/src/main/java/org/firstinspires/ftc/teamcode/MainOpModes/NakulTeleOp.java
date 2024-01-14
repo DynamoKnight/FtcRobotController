@@ -140,7 +140,7 @@ public class NakulTeleOp extends LinearOpMode {
                 if (robot.grab_right != null){
                     if ((robot.grab_right.getPosition() == 0.68)) {
                         // Open
-                        robot.grab_right.setPosition(0.55);
+                        robot.grab_right.setPosition(0.52);
                     } else {
                         // Close
                         robot.grab_right.setPosition(0.68);
@@ -155,7 +155,7 @@ public class NakulTeleOp extends LinearOpMode {
             // Launch Drone
             if(gamepad1.right_trigger > 0.5){
                 if (robot.drone != null){
-                    robot.drone.setPosition(0);
+                    robot.drone.setPosition(0.5);
                 }
             }
 
