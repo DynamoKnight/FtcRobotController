@@ -68,7 +68,9 @@ public class NakulAuto extends LinearOpMode{
     //////////////////////
     //MAIN METHOD
     //////////////////////
-    // This method must be implemented. It is overridden to do the stuff we want.
+    /**
+     * This method must be implemented. It is overridden to do the stuff we want.
+     */
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize Robot and Positions
@@ -76,6 +78,7 @@ public class NakulAuto extends LinearOpMode{
         robot.init(hardwareMap);
         robot.grab_left.setPosition(0.35);
         robot.grab_right.setPosition(0.68);
+        robot.drone.setPosition(0);
 
         this.telemetry.addData("Status", "Initialized at " + side);
         this.telemetry.update();
@@ -181,17 +184,17 @@ public class NakulAuto extends LinearOpMode{
                 sleep(1000);
                 robot.climber.setPower(0);
                 sleep(500);
-                goToTarget(40, false);
+                goToTarget(60, false);
+                goToTarget(37.5, true);
                 sleep(500);
-                goToTarget(30, true);
-                sleep(500);
-                goToTarget(42.5, false);
+                goToTarget(43, false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
                 sleep(150);
                 goToTarget(-10, false);
-                goToTarget(-70, true);
-                goToTarget(25, false);
+                goToTarget(-57.5, true);
+                goToTarget(15, false);
+
             }
             else if (side == Side.BLUE_FRONT) {
                 goToTarget(10, true);
@@ -199,13 +202,19 @@ public class NakulAuto extends LinearOpMode{
                 sleep(750);
                 robot.grab_left.setPosition(0.55);
                 sleep(500);
+                // CLimber goes up a bit
                 robot.climber.setPower(1);
-                sleep(1000);
+                sleep(250);
                 robot.climber.setPower(0);
+
                 goToTarget(70, false);
                 turnTo(85);
                 goToTarget(150, false);
                 robot.grabber.setPosition(0.4);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
                 goToTarget(-67, true);
                 goToTarget(56, false);
                 sleep(1500);
@@ -227,16 +236,14 @@ public class NakulAuto extends LinearOpMode{
                 robot.climber.setPower(0);
                 sleep(500);
                 goToTarget(40, false);
-                sleep(500);
-                goToTarget(-30, true);
-                sleep(500);
-                goToTarget(42.5, false);
-                sleep(1500);
+                goToTarget(-28, true);
+                goToTarget(46, false);
+                sleep(1000);
                 robot.grab_right.setPosition(0.55);
                 sleep(150);
                 goToTarget(-10, false);
                 goToTarget(70, true);
-                goToTarget(25, false);
+                goToTarget(10, false);
             }
             else if (side == Side.RED_FRONT){
                 goToTarget(-10, true);
@@ -244,13 +251,19 @@ public class NakulAuto extends LinearOpMode{
                 sleep(750);
                 robot.grab_left.setPosition(0.55);
                 sleep(500);
+                // CLimber goes up a bit
                 robot.climber.setPower(1);
-                sleep(1000);
+                sleep(250);
                 robot.climber.setPower(0);
+
                 goToTarget(70, false);
                 turnTo(-85);
                 goToTarget(150, false);
                 robot.grabber.setPosition(0.4);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
                 goToTarget(67, true);
                 goToTarget(56, false);
                 sleep(1500);
@@ -266,9 +279,8 @@ public class NakulAuto extends LinearOpMode{
             telemetry.addData("Object Location", "LEFT");
 
             if (side == Side.BLUE_BACK){
-                goToTarget(22, speed, true);
-                sleep(500);
-                goToTarget(30, speed, false);
+                goToTarget(-25, speed, true);
+                goToTarget(32, speed, false);
                 sleep(1000);
                 robot.grab_left.setPosition(0.55);
                 goToTarget(-10, speed, false);
@@ -278,36 +290,48 @@ public class NakulAuto extends LinearOpMode{
                 robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
                 goToTarget(40, speed, false);
-                goToTarget(35, speed, true);
-                goToTarget(15, speed, false);
+                goToTarget(25, speed, true);
+                goToTarget(40, speed, false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, speed, false);
-                goToTarget(-45, speed, true);
-                goToTarget(25, speed, false);
+                goToTarget(-35, speed, true);
+                goToTarget(10, speed, false);
             }
             else if (side == Side.BLUE_FRONT) {
-                goToTarget(29, speed, true);
-                sleep(1000);
-                goToTarget(40, speed, false);
+                goToTarget(-10, true);
+                goToTarget(40, false);
+                turnTo(40);
+                goToTarget(10, false);
+                sleep(250);
                 robot.grab_left.setPosition(0.55);
-                sleep(500);
-                robot.climber.setPower(1);
+                sleep(250);
+                goToTarget(-10, false);
                 sleep(1000);
+                turnTo(5);
+
+                goToTarget(80, false);
+                // CLimber goes up a bit
+                robot.climber.setPower(1);
+                sleep(250);
                 robot.climber.setPower(0);
-                goToTarget(75, speed,false);
-                turnTo(85);
-                goToTarget(203, speed,false);
                 robot.grabber.setPosition(0.4);
-                goToTarget(-35, speed,true);
-                goToTarget(35, speed,false);
-                sleep(1500);
+                turnTo(85);
+                goToTarget(150, false);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
+                goToTarget(-80, true);
+                goToTarget(62, false);
+                sleep(1000);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
-                goToTarget(-10, speed, false);
-                goToTarget(35, speed,true);
-                goToTarget(20, speed,false);
+                goToTarget(-10, false);
+                goToTarget(70, true);
+                goToTarget(20, false);
+
             }
             else if (side == Side.RED_BACK){
                 goToTarget(40, false);
@@ -324,13 +348,13 @@ public class NakulAuto extends LinearOpMode{
                 robot.grabber.setPosition(0.4);
                 goToTarget(50, false);
                 goToTarget(-45, true);
-                goToTarget(27.5, false);
+                goToTarget(39.5, false);
                 sleep(1000);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, false);
                 goToTarget(80, true);
-                goToTarget(15, false);
+                goToTarget(7, false);
 
             }
             else if (side == Side.RED_FRONT) {
@@ -339,13 +363,19 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(40, speed, false);
                 robot.grab_left.setPosition(0.55);
                 sleep(500);
+                // CLimber goes up a bit
                 robot.climber.setPower(1);
-                sleep(1000);
+                sleep(250);
                 robot.climber.setPower(0);
+
                 goToTarget(75, speed,false);
                 turnTo(-85);
                 goToTarget(203, speed,false);
                 robot.grabber.setPosition(0.4);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
                 goToTarget(37.5, speed,true);
                 goToTarget(32.5, speed,false);
                 sleep(1500);
@@ -364,9 +394,9 @@ public class NakulAuto extends LinearOpMode{
             if (side == Side.BLUE_BACK){
                 goToTarget(40, false);
                 turnTo(-40);
-                goToTarget(10, false);
+                goToTarget(5, false);
                 sleep(500);
-                robot.grab_left.setPosition(0.55);
+                robot.grab_left.setPosition(0.6);
                 sleep(250);
                 goToTarget(-10, false);
                 turnTo(87.5);
@@ -374,15 +404,15 @@ public class NakulAuto extends LinearOpMode{
                 sleep(1000);
                 robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
-                goToTarget(50, false);
-                goToTarget(45, true);
-                goToTarget(27.5, false);
+                goToTarget(60, false);
+                goToTarget(60, true);
+                goToTarget(42, false);
                 sleep(1000);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, false);
-                goToTarget(-80, true);
-                goToTarget(15, false);
+                goToTarget(-70, true);
+                goToTarget(13, false);
             }
             else if (side == Side.BLUE_FRONT) {
                 goToTarget(22, speed, true);
@@ -391,12 +421,18 @@ public class NakulAuto extends LinearOpMode{
                 sleep(1000);
                 robot.grab_left.setPosition(0.55);
                 sleep(500);
+                // Climber goes up a bit
                 robot.climber.setPower(1);
-                sleep(1000);
+                sleep(250);
                 robot.climber.setPower(0);
+
                 goToTarget(40, speed,false);
                 turnTo(85);
                 goToTarget(150, speed,false);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
                 goToTarget(-50, speed,true);
                 goToTarget(45, speed,false);
@@ -407,7 +443,7 @@ public class NakulAuto extends LinearOpMode{
 
             }
             else if (side == Side.RED_BACK){
-                goToTarget(22, speed, true);
+                goToTarget(25, speed, true);
                 sleep(500);
                 goToTarget(30, speed, false);
                 sleep(1000);
@@ -421,13 +457,13 @@ public class NakulAuto extends LinearOpMode{
                 robot.grabber.setPosition(0.4);
                 goToTarget(40, speed, false);
                 goToTarget(-32.5, speed, true);
-                goToTarget(15, speed, false);
+                goToTarget(20, speed, false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, speed, false);
                 goToTarget(47.5, speed, true);
-                goToTarget(25, speed, false);
+                goToTarget(10, speed, false);
             }
             else if (side == Side.RED_FRONT) {
                 goToTarget(-10, true);
@@ -442,12 +478,17 @@ public class NakulAuto extends LinearOpMode{
                 turnTo(5);
 
                 goToTarget(80, false);
+                // CLimber goes up a bit
                 robot.climber.setPower(1);
-                sleep(1000);
+                sleep(250);
                 robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
                 turnTo(-85);
                 goToTarget(150, false);
+                // Climber goes up
+                robot.climber.setPower(1);
+                sleep(750);
+                robot.climber.setPower(0);
                 goToTarget(80, true);
                 goToTarget(62, false);
                 sleep(1000);
