@@ -198,6 +198,7 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(55, false);
                 sleep(750);
                 robot.grab_left.setPosition(0.55);
+                sleep(500);
                 robot.climber.setPower(1);
                 sleep(1000);
                 robot.climber.setPower(0);
@@ -242,6 +243,7 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(55, false);
                 sleep(750);
                 robot.grab_left.setPosition(0.55);
+                sleep(500);
                 robot.climber.setPower(1);
                 sleep(1000);
                 robot.climber.setPower(0);
@@ -321,18 +323,18 @@ public class NakulAuto extends LinearOpMode{
                 robot.climber.setPower(0);
                 robot.grabber.setPosition(0.4);
                 goToTarget(50, false);
-                goToTarget(-30, true);
-                goToTarget(25, false);
+                goToTarget(-45, true);
+                goToTarget(27.5, false);
                 sleep(1000);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, false);
-                goToTarget(70, true);
+                goToTarget(80, true);
                 goToTarget(15, false);
 
             }
             else if (side == Side.RED_FRONT) {
-                goToTarget(-29, speed, true);
+                goToTarget(-30, speed, true);
                 sleep(1000);
                 goToTarget(40, speed, false);
                 robot.grab_left.setPosition(0.55);
@@ -344,13 +346,13 @@ public class NakulAuto extends LinearOpMode{
                 turnTo(-85);
                 goToTarget(203, speed,false);
                 robot.grabber.setPosition(0.4);
-                goToTarget(35, speed,true);
-                goToTarget(35, speed,false);
+                goToTarget(37.5, speed,true);
+                goToTarget(32.5, speed,false);
                 sleep(1500);
                 robot.grab_right.setPosition(0.55);
                 sleep(250);
                 goToTarget(-10, speed, false);
-                goToTarget(-35, speed,true);
+                goToTarget(-30, speed,true);
                 goToTarget(20, speed,false);
             }
 
@@ -360,7 +362,27 @@ public class NakulAuto extends LinearOpMode{
             telemetry.addData("Object Location", "RIGHT");
 
             if (side == Side.BLUE_BACK){
-
+                goToTarget(40, false);
+                turnTo(-40);
+                goToTarget(10, false);
+                sleep(500);
+                robot.grab_left.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                turnTo(87.5);
+                robot.climber.setPower(1);
+                sleep(1000);
+                robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                goToTarget(50, false);
+                goToTarget(45, true);
+                goToTarget(27.5, false);
+                sleep(1000);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                goToTarget(-80, true);
+                goToTarget(15, false);
             }
             else if (side == Side.BLUE_FRONT) {
                 goToTarget(22, speed, true);
@@ -408,7 +430,32 @@ public class NakulAuto extends LinearOpMode{
                 goToTarget(25, speed, false);
             }
             else if (side == Side.RED_FRONT) {
+                goToTarget(-10, true);
+                goToTarget(40, false);
+                turnTo(-40);
+                goToTarget(10, false);
+                sleep(250);
+                robot.grab_left.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                sleep(1000);
+                turnTo(5);
 
+                goToTarget(80, false);
+                robot.climber.setPower(1);
+                sleep(1000);
+                robot.climber.setPower(0);
+                robot.grabber.setPosition(0.4);
+                turnTo(-85);
+                goToTarget(150, false);
+                goToTarget(80, true);
+                goToTarget(62, false);
+                sleep(1000);
+                robot.grab_right.setPosition(0.55);
+                sleep(250);
+                goToTarget(-10, false);
+                goToTarget(-70, true);
+                goToTarget(20, false);
             }
 
         }
@@ -519,7 +566,7 @@ public class NakulAuto extends LinearOpMode{
         // Keeps turning until within +- 2 degrees of target
         while (auto.opModeIsActive() && Math.abs(error) > 2){
             // If the error is in the negative direction, go -0.3 power
-            double motorPower = (error < 0 ? -0.3 : 0.3);
+            double motorPower = (error < 0 ? -0.25 : 0.25);
             robot.setMotorPower(-motorPower, motorPower, -motorPower, motorPower);
             // Updates the error
             error = degrees - getAngle();

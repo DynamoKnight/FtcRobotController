@@ -155,27 +155,7 @@ public class NakulTeleOp extends LinearOpMode {
             // Launch Drone
             if(gamepad1.right_trigger > 0.5){
                 if (robot.drone != null){
-                    robot.drone.setPosition(0.5);
-                }
-            }
-
-            // Moves linear slide up and opens servo
-            if (gamepad1.right_bumper) {
-                if(robot.slide_left != null & robot.slide_right != null & robot.auto_claw != null) {
-                    ticks += 50;
-                    robot.slide_left.setTargetPosition(ticks);
-                    robot.slide_left.setPower(0.8);
-                    robot.slide_right.setTargetPosition(ticks);
-                    robot.slide_right.setPower(0.8);
-                    robot.auto_claw.setPosition(1);
-                }
-            }
-            // Linear slide stops
-            else{
-                if(robot.slide_left != null & robot.slide_right != null & robot.auto_claw != null) {
-                    robot.slide_left.setPower(0);
-                    robot.slide_right.setPower(0);
-                    robot.auto_claw.setPosition(0);
+                    robot.drone.setPosition(1);
                 }
             }
 
