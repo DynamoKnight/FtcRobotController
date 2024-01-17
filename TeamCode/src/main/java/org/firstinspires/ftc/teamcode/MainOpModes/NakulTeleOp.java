@@ -25,10 +25,11 @@ public class NakulTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double speed = 1;
         int ticks = 0;
-        // Grabber toggle variables
+        // Grabber toggle servo positions
         double[] grab_pos = {0.525, 0.4, 0.25};
         int cur_idx = 0;
         int dir = 1;
+        // Indicates if held
         boolean grabIsHeld = false;
         boolean lGrabIsHeld = false;
         boolean rGrabIsHeld = false;
