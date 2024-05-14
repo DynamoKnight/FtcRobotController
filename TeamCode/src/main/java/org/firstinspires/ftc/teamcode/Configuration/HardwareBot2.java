@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class HardwareBot {
+public class HardwareBot2 {
     //////////////////////
     //VARIABLES
     //////////////////////
@@ -49,15 +49,7 @@ public class HardwareBot {
     public DcMotor backLeft;
     public DcMotor backRight;
     public DcMotor climber;
-    public Servo claw;
-    public Servo grabber;
-    public Servo grab_left;
-    public Servo grab_right;
-    public Servo drone;
     public BNO055IMU imu;
-    public DcMotor slide_left;
-    public DcMotor slide_right;
-    public Servo auto_claw;
 
     public Orientation angles;
     public double encoder_resolution;
@@ -67,7 +59,7 @@ public class HardwareBot {
     //////////////////////
     //CONSTRUCTOR
     //////////////////////
-    public HardwareBot() {}
+    public HardwareBot2() {}
 
     //////////////////////
     //METHODS
@@ -80,11 +72,6 @@ public class HardwareBot {
         frontRight = hardwareMap.get(DcMotor.class, Config.DRIVE_FRONT_RIGHT);
         backLeft = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_LEFT);
         backRight = hardwareMap.get(DcMotor.class, Config.DRIVE_BACK_RIGHT);
-        climber = hardwareMap.get(DcMotor.class, Config.CLIMBER);
-        grabber = hardwareMap.get(Servo.class, Config.GRABBER);
-        drone = hardwareMap.get(Servo.class, Config.DRONE);
-        grab_left = hardwareMap.get(Servo.class, Config.GRAB_LEFT);
-        grab_right = hardwareMap.get(Servo.class, Config.GRAB_RIGHT);
 
         // The Left side axle points are in opposite direction
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -104,39 +91,8 @@ public class HardwareBot {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Initializing the IMU
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO55IMUCalibration.json";
-        // Allows the values to be tracked
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
-        // Indicates the algorithm used to track the velocity and position
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
-
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
-
-        //RevHubOrientationOnRobot.LogoFacingDirection.RIGHT
-        //RevHubOrientationOnRobot.UsbFacingDirection.UP
-
-        // Slide Motors
-        /*
-        slide_left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide_left.setTargetPosition(0);
-        slide_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        slide_right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide_right.setTargetPosition(0);
-        slide_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        */
-
         encoder_resolution = Config.ENCODER_RESOLUTION;
-        mc_diameter = Config.MECANUM_WHEEL_DIAMETER;
+        mc_diameter = Config.MECANUM_WHEEL_DIAMETER2;
     }
 
     public void waitForTick(long periodMs) throws InterruptedException {

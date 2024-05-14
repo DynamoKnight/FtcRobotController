@@ -30,6 +30,7 @@ public class Config {
     public static volatile double ENCODER_RESOLUTION = 537.7;
     // 9.6 cm small, 14.0 cm big
     public static double MECANUM_WHEEL_DIAMETER = 14.0; // Centimeters
+    public static double MECANUM_WHEEL_DIAMETER2 = 9.6;
 
     public static volatile double DRIVE_CURVE = 1.5;
     public static volatile double DRIVE_DEAD_ZONE = 0.05;
