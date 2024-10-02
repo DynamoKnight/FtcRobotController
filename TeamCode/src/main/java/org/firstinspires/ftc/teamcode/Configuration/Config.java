@@ -11,15 +11,21 @@ public class Config {
     FTC Setup Slides: https://docs.google.com/presentation/d/17UBroNhJ1QiZ4FxsuMDyzwsqthyI9WFedGaZPvKOX0o/edit?usp=sharing
 
     Active Configuration:
+        Webcam 1 - B50A22EO
         Control Hub
-            Motor - drive_front_left
-            Motor - drive_back_left
-            I2C Bus 0 - BHI260APIMU
+            0 Motor - drive_front_left
+            1 Motor - drive_back_left
+            2 Servo - claw_servo
+            I2C Bus 0 BHI260AP IMU - imu2
         Expansion Hub 2
-            Motor - drive_front_right
-            Motor - drive_back_right
-            Motor - climber
-            I2C Bus 0 - BNO055IMU
+            0 Motor - drive_front_right
+            1 Motor - drive_back_right
+            2 Motor - climber
+            0 Servo - grab_servo_right
+            1 Servo - grab_servo
+            2 Servo - grab_servo_left
+            3 Servo - drone_servo
+            I2C Bus 0 BNO055 IMU - imu
      */
 
     // Drivetrain

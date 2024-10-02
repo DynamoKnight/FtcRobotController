@@ -58,7 +58,7 @@ public class NakulAuto extends LinearOpMode{
     public NakulAuto(){}
 
     public NakulAuto(LinearOpMode auto, Side side){
-        // auto is a specific reference to "this"
+        // auto is a specific reference to "this", which is a instance of one of the 4 autos
         this.auto = auto;
         this.hardwareMap = auto.hardwareMap;
         this.telemetry = auto.telemetry;
